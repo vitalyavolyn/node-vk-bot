@@ -148,6 +148,6 @@ export default class Bot extends EventEmitter {
       return
     }
 
-    ev.listener(new Message(update))
+    ev.listener(new Message(update), ev.pattern.exec(text))
   }
 }
