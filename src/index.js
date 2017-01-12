@@ -136,6 +136,7 @@ export default class Bot extends EventEmitter {
       if (typeof p === 'string') p = new RegExp(`^${p}`)
 
       if (text.search(p) !== 0) { // если не начинается с префикса
+        if (!this.options.prefixOnlyInChats) return
         if (this.options.prefixOnlyInChats && isChat) return
       }
     }
