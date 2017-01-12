@@ -2,6 +2,7 @@ if (!global._babelPolyfill) require('babel-polyfill')
 
 import API from './functions/api'
 import poll from './functions/poll'
+import Message from './functions/Message'
 
 import { EventEmitter } from 'events'
 
@@ -120,6 +121,6 @@ export default class Bot extends EventEmitter {
       return
     }
 
-    ev.listener(update)
+    ev.listener(new Message(update))
   }
 }
