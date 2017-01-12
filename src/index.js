@@ -132,7 +132,7 @@ export default class Bot extends EventEmitter {
     // если задан список чатов и сообщение не из них, то пропустить его
 
     if (this.options.prefix) {
-      let p = this.options.prefx
+      let p = this.options.prefix
       if (typeof p === 'string') p = new RegExp(`^${p}`)
 
       if (text.search(p) !== 0) { // если не начинается с префикса
