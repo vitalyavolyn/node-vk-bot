@@ -1,6 +1,6 @@
 {
   "name": "node-vk-bot",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Утилита для создания ботов ВК",
   "main": "build/index.js",
   "scripts": {
