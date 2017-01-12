@@ -22,11 +22,9 @@ const bot = new Bot({
 bot
   .start()
   .get(/Hi|Hello|Hey/i, message => {
-    const peer_id = message[3]
-    const msg_id = message[1]
-    const forward =  { forward_messages: msg_id }
+    const forward =  { forward_messages: message.id }
 
-    bot.send('Hello!', peer_id, forward)
+    bot.send('Hello!', message.peer_id, forward)
   })
 ```
 
