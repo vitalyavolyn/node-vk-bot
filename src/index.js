@@ -5,6 +5,8 @@ import poll from './functions/poll'
 import Message from './functions/Message'
 
 import { EventEmitter } from 'events'
+import rq from 'request-promise-native'
+import fs from 'fs'
 
 /**
  * Класс бота
@@ -90,6 +92,30 @@ export default class Bot extends EventEmitter {
       pattern, listener
     })
     return this
+  }
+
+  /**
+   * Загрузка фотографий
+   * @param {String} path Путь к фотографии
+   * @returns {Promise} Промис, который возвращает объкект
+   *                    фотографии (vk.com/dev/photos.saveMessagesPhoto)
+   */
+  uploadPhoto (path) {
+    return this.api('photos.getMessagesUploadServer')
+      .then(server => rq({
+        method: 'POST',
+        uri: server.upload_url,
+        formData: {
+          photo: fs.createReadStream(path)
+        },
+        json: true
+      }))
+      .then(upload => this.api('photos.saveMessagesPhoto', {
+        server: upload.server,
+        photo: upload.photo,
+        hash: upload.hash
+      }))
+      .then(photos => photos[0])
   }
 
   /**

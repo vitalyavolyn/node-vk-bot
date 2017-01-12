@@ -106,6 +106,19 @@ bot.send('text', peer_id, params)
 
 -------
 
+##### uploadPhoto
+Upload a photo.
+
+The only parameter is a path to picture
+Returns a Promise that resolves with a [photo object](https://vk.com/dev/photos.saveMessagesPhoto)
+```javascript
+bot.uploadPhoto('~/kittens.png').then(photo => {
+  console.log(photo)
+})
+```
+
+-------
+
 ##### api
 Access VK API.
 
