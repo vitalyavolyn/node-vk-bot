@@ -91,7 +91,7 @@ bot.get(/Hello/i, msg => {
 })
 ```
 
-The argument passed to callback is a [`Message`](https://github.com/Eblonko/node-vk-bot#the-message-object) object.
+The argument passed to callback is a [`Message`](https://github.com/Eblonko/node-vk-bot#the-message-object) object and result of `patter.exec(text)`.
 
 -------
 
@@ -107,7 +107,7 @@ bot.send('text', peer_id, params)
 ##### uploadPhoto
 Upload a photo.
 
-The only parameter is a path to picture. 
+The only parameter is a path to picture.
 Returns a Promise that resolves with a [photo object](https://vk.com/dev/photos.saveMessagesPhoto)
 ```javascript
 bot.uploadPhoto('~/kittens.png').then(photo => {
