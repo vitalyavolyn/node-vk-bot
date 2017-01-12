@@ -137,7 +137,6 @@ bot.stop()
 
 #### Events
 ##### update
-
 The update event is emitted whenever there is a response from LongPoll.
 
 ```javascript
@@ -146,6 +145,16 @@ bot.on('update', update => {
     console.log('Got an message from Pavel Durov!');
   }
 })
+```
+-------
+
+#####command-notfound
+This event is emitted whenever there's no `.get()` listeners matching
+
+```javascript
+bot.on('command-notfound', msg => {
+  bot.send('What?', msg.peer_id)
+}
 ```
 
 -------
