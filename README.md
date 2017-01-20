@@ -35,6 +35,7 @@ To get updates from the server, we use [polling](https://vk.com/dev/using_longpo
 In the example above you can see a super simple VK Bot. This bot will answer our greetings, that's all.
 
 Let's explain the code, it's pretty simple.
+
 1. First of all, you have to import the library.
 2. Then I create a bot instance, with my [token](https://vk.com/dev/access_token).
 3. By calling `bot.start()` the bot starts polling updates from the server.
