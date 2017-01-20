@@ -1,6 +1,5 @@
 if (!global._babelPolyfill) require('babel-polyfill')
 
-import API from './functions/api'
 import poll from './functions/poll'
 import Message from './functions/Message'
 
@@ -35,13 +34,30 @@ export default class Bot extends EventEmitter {
 
     if (!options.token) throw new Error('Token can\'t be empty')
     this.token = options.token
-    this.api = API(this.token)
 
     this.options = options
 
     // EventEmitter
     this._events = {}
     this._userEvents = []
+  }
+
+  api (method, params = {}) {
+    params.v = params.v || 5.62
+    params.access_token = this.token
+    return rq({
+      baseUrl: 'https://api.vk.com',
+      uri: '/method/' + method,
+      form: params,
+      method: 'POST',
+      json: true,
+      timeout: this.timeout
+    }).then(res => {
+      if (res.error) {
+        throw res.error
+      }
+      return res.response
+    })
   }
 
   /**
