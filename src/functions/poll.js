@@ -11,7 +11,6 @@ export default function poll (bot) {
 
   function request (url) {
     return rq(url, { json: true })
-      .catch(() => poll(bot))
       .then(res => {
         if (!res || !res.ts || res.failed) return poll(bot) // перезапуск при ошибке
         url = url.replace(/ts=.*/, `ts=${res.ts}`) // ставим новое время
@@ -25,6 +24,6 @@ export default function poll (bot) {
 
         if (bot._stop) return null
         return sleep(300).then(() => request(url))
-      })
+      }, () => poll(bot))
   }
 }
