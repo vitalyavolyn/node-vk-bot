@@ -56,7 +56,11 @@ new Bot({
   chats: [
     1,
     2e9 + 12
-  ]
+  ],
+  api: {
+    v: 5.62,
+    lang: 'ru'
+  }
 })
 ```
 
@@ -66,9 +70,12 @@ new Bot({
 | prefix    | RexExp | No |
 | prefixOnlyInChats | Boolean | No |
 | chats     | Array | No |
+| api       | Object| No |
 
 If `prefix` is set, the bot will work only with messages with prefix match. (if `prefixOnlyInChats` is `true`, then prefix will be checked only for messages from group chats)<br>
 If `chats` is set, the bot will work only with messages from these chats
+
+`api` is object with API settings: v(ersion) and lang(uage). ([Read more](https://vk.com/dev/api_requests))
 
 -------
 
