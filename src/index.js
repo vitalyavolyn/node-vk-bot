@@ -46,8 +46,11 @@ export default class Bot extends EventEmitter {
   }
 
   api (method, params = {}) {
-    params.v = params.v || this.options.api.v || 5.62
-    if (this.options.api.lang) params.lang = this.options.api.lang
+    if (this.options.api && this.options.api === undefined) this.options.api = 5.62
+    params.v = params.v ? params.v
+      : this.options.api ? this.options.api.v : 5.62
+    if (this.options.api && this.options.api.lang) params.lang = this.options.api.lang
+
     params.access_token = this.token
     return rq({
       baseUrl: 'https://api.vk.com',
