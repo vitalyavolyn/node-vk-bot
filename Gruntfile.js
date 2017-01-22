@@ -11,7 +11,7 @@ module.exports = function(grunt) {
       }
     },
     eslint: {
-      scripts: ['src/**/*.js']
+      scripts: ['src/**/*.js', 'test/**/*.js']
     },
     watch: {
       scripts: {
