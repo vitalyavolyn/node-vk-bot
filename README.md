@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Eblonko/node-vk-bot.svg?branch=master)](https://travis-ci.org/Eblonko/node-vk-bot)
+
 # VK BOTS
 Create and control VK bots easily.
 ```sh
