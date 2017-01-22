@@ -1,5 +1,6 @@
 import rq from 'request-promise-native'
-import sleep from './sleep'
+
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 export default function poll (bot) {
   return bot.api('messages.getLongPollServer')
