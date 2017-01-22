@@ -28,6 +28,9 @@ export default class Bot extends EventEmitter {
    *                                    сообщения которых будут обрабатываться.
    *                                    Если не задавать, то обрабатываться
    *                                    будут все приходящие сообщения.
+   *                           - api (необязательно) Объект с натройками API:
+   *                                    - lang язык (https://vk.com/dev/api_requests)
+   *                                    - v версия (больше 5.38, иначе сообщения не отправляются)
    */
   constructor (options = {}) {
     super()
@@ -43,7 +46,8 @@ export default class Bot extends EventEmitter {
   }
 
   api (method, params = {}) {
-    params.v = params.v || 5.62
+    params.v = params.v || this.options.api.v || 5.62
+    if (this.options.api.lang) params.lang = this.options.api.lang
     params.access_token = this.token
     return rq({
       baseUrl: 'https://api.vk.com',
