@@ -101,7 +101,7 @@ bot.get(/Hello/i, msg => {
 })
 ```
 
-The argument passed to callback is a [`Message`](https://github.com/Eblonko/node-vk-bot#the-message-object) object and result of `patter.exec(text)`.
+The argument passed to callback is a [`Message`](https://github.com/Eblonko/node-vk-bot#the-message-object) object and result of `pattern.exec(text)`.
 
 -------
 
