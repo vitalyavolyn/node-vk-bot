@@ -6,7 +6,7 @@ const peer = process.env.TEST_PEER_ID
 const token = process.env.TEST_VK_TOKEN
 
 describe('Bot', function () {
-  let engbot, rusbot, bot, pollingbot
+  let engbot, rusbot, bot, pollingbot, oldVersionBot
 
   before(function beforeAll () {
     bot = new Bot({ token })
@@ -18,6 +18,7 @@ describe('Bot', function () {
       token,
       api: { lang: 'ru' }
     })
+    oldVersionBot = new Bot({ token, api: {version: 5.37} })
     pollingbot = new Bot({ token })
     pollingbot.start()
   })
@@ -35,7 +36,7 @@ describe('Bot', function () {
     })
   })
 
-  describe('API', function () {
+  describe('#api', function () {
     describe('Languages', function () {
       it('Gets response in Russian', function () {
         return rusbot.api('users.get', { user_ids: 1 })
@@ -50,6 +51,15 @@ describe('Bot', function () {
           .then(durov => {
             if (durov.first_name !== 'Pavel') throw new Error()
           })
+      })
+    })
+
+    describe('Versions', function () {
+      it('Gets error when using peer_id on version 5.37', function () {
+        return oldVersionBot.api('messages.send', {
+          peer_id: peer,
+          message: '123'
+        }).then(() => false, () => true)
       })
     })
   })
