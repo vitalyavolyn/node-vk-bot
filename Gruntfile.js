@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   grunt.initConfig({
     babel: {
       scripts: {
@@ -20,12 +20,12 @@ module.exports = function(grunt) {
       }
     },
     clean: ['build', 'types']
-  });
+  })
 
-  grunt.loadNpmTasks('grunt-babel');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-eslint');
-  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-babel')
+  grunt.loadNpmTasks('grunt-contrib-watch')
+  grunt.loadNpmTasks('grunt-eslint')
+  grunt.loadNpmTasks('grunt-contrib-clean')
 
-  grunt.registerTask('default', ['clean', 'babel', 'eslint']);
-};
+  grunt.registerTask('default', ['clean', 'babel', 'eslint'])
+}
