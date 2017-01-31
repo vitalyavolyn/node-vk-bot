@@ -1,4 +1,4 @@
-/* global describe before it */
+/* global describe it */
 const Bot = require('..')
 // const assert = require('assert')
 
@@ -8,20 +8,18 @@ const token = process.env.TEST_VK_TOKEN
 describe('Bot', function () {
   let engbot, rusbot, bot, pollingbot, oldVersionBot
 
-  before(function beforeAll () {
-    bot = new Bot({ token })
-    engbot = new Bot({
-      token,
-      api: { lang: 'en' }
-    })
-    rusbot = new Bot({
-      token,
-      api: { lang: 'ru' }
-    })
-    oldVersionBot = new Bot({ token, api: { v: 5.37 } })
-    pollingbot = new Bot({ token })
-    pollingbot.start()
+  bot = new Bot({ token })
+  engbot = new Bot({
+    token,
+    api: { lang: 'en' }
   })
+  rusbot = new Bot({
+    token,
+    api: { lang: 'ru' }
+  })
+  oldVersionBot = new Bot({ token, api: { v: 5.37 } })
+  pollingbot = new Bot({ token })
+  pollingbot.start()
 
   describe('Events', function () {
     it('Emits "update" on recieved message', (done) => {
