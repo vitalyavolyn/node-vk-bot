@@ -18,7 +18,7 @@ describe('Bot', function () {
       token,
       api: { lang: 'ru' }
     })
-    oldVersionBot = new Bot({ token, api: {version: 5.37} })
+    oldVersionBot = new Bot({ token, api: { v: 5.37 } })
     pollingbot = new Bot({ token })
     pollingbot.start()
   })
