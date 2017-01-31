@@ -44,7 +44,7 @@ Let's explain the code, it's pretty simple.
 3. By calling `bot.start()` the bot starts polling updates from the server.
 4. Then I simply listen on messages which pass the RegExp test, when I get such message, Then I send a new message with text 'Hello' to that chat with a forwarded message.
 
-The API is simple as possible, still, if you have any suggestions about simplifying the API, please fill an issue.
+The API is simple as possible, still, if you have any suggestions about simplifying the API, please fill an [issue](https://github.com/Eblonko/node-vk-bot/issues/new).
 
 -------
 
@@ -53,7 +53,7 @@ The class used to create new bots, it takes a single argument, an `options` obje
 
 ```javascript
 new Bot({
-  token: '5a9bdc30ea18ab4a685a8f773642ba0d',
+  token: '5a9bdc30ea18ab4a685a8f773642ba0d', // don't even try to use this token
   prefix: /^Bot[\s,]/,
   prefixOnlyInChats: true,
   chats: [
@@ -78,7 +78,7 @@ new Bot({
 If `prefix` is set, the bot will work only with messages with prefix match. (if `prefixOnlyInChats` is `true`, then prefix will be checked only for messages from group chats)<br>
 If `chats` is set, the bot will work only with messages from these chats
 
-`api` is object with API settings: v(ersion) and lang(uage). ([Read more](https://vk.com/dev/api_requests))
+`api` is object with API settings: **v**ersion and **lang**uage. ([Read more](https://vk.com/dev/api_requests))
 
 -------
 
@@ -159,7 +159,7 @@ bot.on('update', update => {
 ```
 -------
 
-#####command-notfound
+##### command-notfound
 This event is emitted whenever there's no `.get()` listeners matching
 
 ```javascript
@@ -179,6 +179,6 @@ bot.on('command-notfound', msg => {
   title: String, // chat title
   body: String, // message body
   user_id: Number // sender's ID
-  attachments: Object // vk.com/dev/using_longpoll see the attachments section
+  attachments: Object // vk.com/dev/using_longpoll - see the attachments section
 }
 ```
