@@ -48,7 +48,7 @@ export default class Bot extends EventEmitter {
   api (method, params = {}) {
     let o = this.options
     if (o.api) {
-      params.v = params.v || o.api.version || 5.62
+      params.v = params.v || o.api.v || 5.62
       params.lang = params.lang || o.api.lang
       if (params.lang === undefined) delete params.lang
     } else params.v = params.v || 5.62
