@@ -1,5 +1,5 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a0950ccdf7b54dd7a7b7bc23fa7e7123)](https://www.codacy.com/app/Eblonko/node-vk-bot?utm_source=github.com&utm_medium=referral&utm_content=Eblonko/node-vk-bot&utm_campaign=badger)
-[![CircleCI](https://img.shields.io/circleci/project/github/RedSparr0w/node-csgo-parser.svg)](https://circleci.com/gh/Eblonko/node-vk-bot)
+[![CircleCI](https://img.shields.io/circleci/project/github/vitalyavolyn/node-vk-bot.svg)](https://circleci.com/gh/vitalyavolyn/node-vk-bot)
 
 # VK BOTS
 Create and control VK bots easily.
