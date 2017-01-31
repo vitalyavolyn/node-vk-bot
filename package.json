@@ -1,7 +1,7 @@
 {
   "name": "node-vk-bot",
   "version": "0.0.9",
-  "description": "Утилита для создания ботов ВК",
+  "description": "Create and control VK bots easily.",
   "main": "index.js",
   "scripts": {
     "eslint": "eslint ./src ./test",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Eblonko/node-vk-bot"
+    "url": "https://github.com/vitalyavolyn/node-vk-bot"
   },
   "keywords": [
     "VK",
