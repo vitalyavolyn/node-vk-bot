@@ -2,10 +2,6 @@
 .grunt
 node_modules
 *.log
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+.vscode
 .tscache
 .baseDir.*
