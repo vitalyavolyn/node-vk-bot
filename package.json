@@ -29,6 +29,9 @@
     "typescript": "^2.1.5"
   },
   "dependencies": {
+    "@types/node": "^7.0.4",
+    "@types/request": "0.0.39",
+    "@types/request-promise-native": "^1.0.2",
     "request": "^2.79.0",
     "request-promise-native": "^1.0.3"
   }
