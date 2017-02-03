@@ -6,7 +6,7 @@ const peer = process.env.TEST_PEER_ID
 const token = process.env.TEST_VK_TOKEN
 
 describe('Bot', function () {
-  let engbot, rusbot, bot, pollingbot, oldVersionBot
+  var engbot, rusbot, bot, pollingbot, oldVersionBot
 
   bot = new Bot({ token })
   engbot = new Bot({

@@ -93,9 +93,7 @@ See  [`poll.js`](https://github.com/Eblonko/node-vk-bot/blob/master/src/function
 -------
 
 ##### get
-Listens on specific message matching the pattern which can be an string or a regexp.
-In case of an string, the message should "start" with the string, that is, the string is converted to `new RegExp('^' + string)`. (Attention: it'll not work with prefix)
-
+Listens on specific message matching the RegExp pattern.
 ```javascript
 bot.get(/Hello/i, msg => {
   console.log(msg)

@@ -1,4 +1,4 @@
-import rq from 'request-promise-native'
+import * as rq from 'request-promise-native'
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 

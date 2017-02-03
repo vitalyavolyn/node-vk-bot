@@ -1,4 +1,7 @@
-build
+# build
 .grunt
 node_modules
 *.log
+.vscode
+.tscache
+.baseDir.*
