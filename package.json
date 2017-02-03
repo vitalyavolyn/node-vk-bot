@@ -4,7 +4,6 @@
   "description": "Create and control VK bots easily.",
   "main": "index.js",
   "scripts": {
-    "eslint": "eslint ./src ./test",
     "test": "grunt && ./node_modules/mocha/bin/mocha"
   },
   "repository": {
@@ -21,22 +20,11 @@
   "author": "Vitaly Volynsky",
   "license": "MIT",
   "devDependencies": {
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-register": "^6.22.0",
-    "eslint": "^3.13.1",
-    "eslint-config-standard": "^6.2.1",
-    "eslint-plugin-promise": "^3.4.0",
-    "eslint-plugin-standard": "^2.0.1",
     "grunt": "^1.0.1",
-    "grunt-babel": "^6.0.0",
     "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-eslint": "^19.0.0",
     "mocha": "^3.2.0"
   },
   "dependencies": {
-    "babel-polyfill": "^6.20.0",
     "request": "^2.79.0",
     "request-promise-native": "^1.0.3"
   }

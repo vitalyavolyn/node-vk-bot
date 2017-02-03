@@ -9,7 +9,4 @@ export TEST_PEER_ID=<PEER_ID>
 
 # Run ALL tests
 npm test
-
-# Run ESLint analysis  
-npm run eslint
 ```
