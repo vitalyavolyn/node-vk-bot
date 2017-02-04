@@ -1,4 +1,4 @@
-/* global describe it */
+const { describe, it } = require('mocha')
 const Bot = require('..')
 // const assert = require('assert')
 
