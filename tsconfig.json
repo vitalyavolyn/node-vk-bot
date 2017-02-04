@@ -6,7 +6,7 @@
             "es6",
             "es2016"
         ],
-        "target": "es6",
+        "target": "es5",
         "noImplicitAny": false,
         "sourceMap": false,
         "declaration": true,
