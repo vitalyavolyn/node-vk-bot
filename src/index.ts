@@ -12,9 +12,14 @@ export interface Options {
   api?: { lang?: string, v?: number}
 }
 
+export interface UserEvent {
+  pattern: RegExp,
+  listener: Function
+}
+
 export default class Bot extends EventEmitter {
   _events: Object = {}
-  _userEvents: any[] = []
+  _userEvents: UserEvent[] = []
   _stop: boolean = false
 
   constructor (public options: Options) {

@@ -56,6 +56,7 @@
     "array-type": [
         true,
         "array"
-    ]
+    ],
+    "jsdoc-format": true
   }
 }
