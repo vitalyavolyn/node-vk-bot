@@ -13,12 +13,11 @@ export interface Options {
 }
 
 export default class Bot extends EventEmitter {
-  options: Options
   _events: Object = {}
   _userEvents: any[] = []
   _stop: boolean = false
 
-  constructor (options: Options) {
+  constructor (public options: Options) {
     super()
 
     if (!options.token) throw new Error('Token can\'t be empty')
