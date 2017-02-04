@@ -2,6 +2,8 @@
 [![CircleCI](https://circleci.com/gh/vitalyavolyn/node-vk-bot.svg?style=shield)](https://circleci.com/gh/vitalyavolyn/node-vk-bot)
 
 # VK BOTS
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/vitalyavolyn/node-vk-bot.svg)](https://greenkeeper.io/)
 Create and control VK bots easily.
 ```sh
 npm install --save node-vk-bot
