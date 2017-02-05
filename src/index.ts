@@ -12,9 +12,19 @@ export interface Options {
   api?: { lang?: string, v?: number}
 }
 
+export interface Message {
+  id: number,
+  peer_id: number,
+  date: number,
+  title: string,
+  body: string,
+  user_id: number,
+  attachments: Object
+}
+
 export interface UserEvent {
   pattern: RegExp,
-  listener: Function
+  listener(msg?: Message, exec?: RegExpExecArray) : any
 }
 
 export default class Bot extends EventEmitter {
@@ -95,7 +105,7 @@ export default class Bot extends EventEmitter {
    * @param pattern
    * @returns The bot object
    */
-  get (pattern: RegExp, listener: Function) {
+  get (pattern: RegExp, listener: (msg?: Message, exec?: RegExpExecArray) => any) {
     this._userEvents.push({
       pattern, listener
     })
@@ -143,11 +153,11 @@ export default class Bot extends EventEmitter {
     const ev = this._userEvents.find(({ pattern }) => pattern.test(text))
 
     if (!ev) {
-      this.emit('command-notfound', new Message(update))
+      this.emit('command-notfound', new Message(update) as Message)
       return
     }
 
-    ev.listener(new Message(update), ev.pattern.exec(text))
+    ev.listener(new Message(update) as Message, ev.pattern.exec(text))
   }
 }
 

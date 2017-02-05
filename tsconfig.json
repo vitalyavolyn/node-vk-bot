@@ -1,16 +1,16 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "lib":[
-            "es6",
-            "es2016"
-        ],
-        "target": "es5",
-        "noImplicitAny": false,
-        "sourceMap": false,
-        "declaration": true,
-        "rootDir": "./src",
-        "outDir": "./build"
-    }
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": [
+      "es6",
+      "es2016"
+    ],
+    "target": "es5",
+    "noImplicitAny": false,
+    "sourceMap": false,
+    "declaration": true,
+    "rootDir": "./src",
+    "outDir": "./build"
+  }
 }

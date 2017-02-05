@@ -11,7 +11,7 @@ If you are cloning this repository, remember to run `npm install` to install dep
 
 # Example
 ```javascript
-// ES6
+// ES6 and TypeScript
 import Bot from 'node-vk-bot'
 
 // ES5
@@ -169,14 +169,14 @@ bot.on('command-notfound', msg => {
 -------
 
 ### The `Message` Object
-```javascript
-{
-  id: Number, // message id
-  peer_id: Number, // message's chat peer id
-  date: Number, // time (in Unixtime format)
-  title: String, // chat title
-  body: String, // message body
-  user_id: Number // sender's ID
+```typescript
+interface Message {
+  id: number, // message id
+  peer_id: number, // message's chat peer_id
+  date: number, // time (in Unixtime format)
+  title: string, // chat title 
+  body: string, // message text
+  user_id: number, // sender's ID 
   attachments: Object // vk.com/dev/using_longpoll - see the attachments section
 }
 ```
