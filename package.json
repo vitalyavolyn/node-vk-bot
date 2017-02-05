@@ -1,6 +1,6 @@
 {
   "name": "node-vk-bot",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Create and control VK bots easily.",
   "main": "./build/index.js",
   "typings": "./build/index.d.ts",
