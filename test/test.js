@@ -1,30 +1,26 @@
 const { describe, it } = require('mocha')
 const Bot = require('..')
-// const assert = require('assert')
 
 const peer = process.env.TEST_PEER_ID
 const token = process.env.TEST_VK_TOKEN
 
 describe('Bot', function () {
-  var engbot, rusbot, bot, pollingbot, oldVersionBot
-
-  bot = new Bot({ token })
-  engbot = new Bot({
-    token,
-    api: { lang: 'en' }
-  })
-  rusbot = new Bot({
-    token,
-    api: { lang: 'ru' }
-  })
-  oldVersionBot = new Bot({ token, api: { v: 5.37 } })
-  pollingbot = new Bot({ token })
+  const bot = new Bot({ token })
+  
+  const engbot = new Bot({ token, api: { lang: 'en' } })
+  const rusbot = new Bot({ token, api: { lang: 'ru' } })
+  
+  const oldVersionBot = new Bot({ token, api: { v: 5.37 } })
+  
+  const pollingbot = new Bot({ token })
   pollingbot.start()
 
   describe('Events', function () {
     it('Emits "update" on recieved message', (done) => {
       pollingbot.once('update', () => done())
-      pollingbot.send('Test message', peer)
+      setTimeout(function() {
+        pollingbot.send('Test message', peer)
+      }, 1000) // because sometimes it doesn't work ¯\_(ツ)_/¯ 
     })
   })
 
