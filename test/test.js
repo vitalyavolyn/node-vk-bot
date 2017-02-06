@@ -15,15 +15,6 @@ describe('Bot', function () {
   const pollingbot = new Bot({ token })
   pollingbot.start()
 
-  describe('Events', function () {
-    it('Emits "update" on recieved message', (done) => {
-      pollingbot.once('update', () => done())
-      setTimeout(function() {
-        pollingbot.send('Test message', peer)
-      }, 5000) // because sometimes it doesn't work ¯\_(ツ)_/¯ 
-    })
-  })
-
   describe('#send', function () {
     it('Sends message', function () {
       return bot.send('Test message 2', peer)
