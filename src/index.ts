@@ -4,6 +4,17 @@ import * as fs from 'fs'
 import Message from './functions/Message'
 import poll from './functions/poll'
 
+export type VKResponse = any
+export interface VKError {
+  name: string,
+  code: number,
+  description: string
+}
+export interface VKExecuteResponse {
+  response?: VKResponse,
+  execute_errors?: VKError[]
+}
+
 export interface Options {
   token: string,
   prefix?: RegExp,
@@ -64,9 +75,11 @@ export default class Bot extends EventEmitter {
       json: true
     }).then(res => {
       if (res.error) {
-        throw res.error
+        throw res.error as VKError
+      } else if (method === 'execute') { // there may be errors and responses in same object
+        return res as VKExecuteResponse
       }
-      return res.response
+      return res.response as VKResponse
     })
   }
 

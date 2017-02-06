@@ -39,12 +39,22 @@ describe('Bot', function () {
             if (durov.first_name !== 'Павел') throw new Error()
           })
       })
+      
       it('Gets response in English', function () {
         return engbot.api('users.get', { user_ids: 1 })
           .then(res => res[0])
           .then(durov => {
             if (durov.first_name !== 'Pavel') throw new Error()
           })
+      })
+      
+      it('Gets full response object if using `execute` method', function () {
+        return bot.api('execute', {
+          code: "return [API.messages.send(), API.messages.send()];"
+        }).then(res => {
+          if (!res.response) throw new Error('There is no response object')
+          if (!res.execute_errors) throw new Error('There is no errors object')
+        })
       })
     })
 
