@@ -30,7 +30,7 @@ export interface Message {
   title: string,
   body: string,
   user_id: number,
-  attachments: Object
+  attachments: any
 }
 
 export interface UserEvent {
@@ -62,7 +62,7 @@ export default class Bot extends EventEmitter {
     if (o.api) {
       params.v = params.v || o.api.v || 5.62
       params.lang = params.lang || o.api.lang
-      if (params.lang === undefined) delete params.lang
+      if (params.lang == null) delete params.lang
     } else params.v = params.v || 5.62
 
     params.access_token = this.options.token
