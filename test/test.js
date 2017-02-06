@@ -1,5 +1,6 @@
 const { describe, it } = require('mocha')
 const Bot = require('..')
+const path = require('path')
 
 const peer = process.env.TEST_PEER_ID
 const token = process.env.TEST_VK_TOKEN
@@ -57,6 +58,13 @@ describe('Bot', function () {
           message: '123'
         }).then(() => { throw new Error() }, () => true)
       })
+    })
+  })
+
+  describe('#uploadPhoto', function () {
+    it('Uploads photo', function () {
+      let img = path.join(__dirname, './kitten.jpg')
+      return bot.uploadPhoto(img)
     })
   })
 })
