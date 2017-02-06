@@ -132,7 +132,9 @@ Access VK API.
 ```javascript
 bot.api('users.get', { user_ids: 1 })
 ```
+
 Attention! When using `execute` method, this function returns full response object. (Because there may be errors and responses in same object).
+
 -------
 
 ##### stop
