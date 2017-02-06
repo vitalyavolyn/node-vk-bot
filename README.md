@@ -61,7 +61,7 @@ new Bot({
     2e9 + 12
   ],
   api: {
-    v: 5.62,
+    v: 5.62, // must be >= 5.38
     lang: 'ru'
   }
 })
