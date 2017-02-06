@@ -153,11 +153,11 @@ export default class Bot extends EventEmitter {
     const ev = this._userEvents.find(({ pattern }) => pattern.test(text))
 
     if (!ev) {
-      this.emit('command-notfound', new Message(update) as Message)
+      this.emit('command-notfound', Message(update))
       return
     }
 
-    ev.listener(new Message(update) as Message, ev.pattern.exec(text))
+    ev.listener(Message(update), ev.pattern.exec(text))
   }
 }
 
