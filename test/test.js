@@ -47,16 +47,17 @@ describe('Bot', function () {
             if (durov.first_name !== 'Pavel') throw new Error()
           })
       })
+    })
       
-      it('Gets full response object if using `execute` method', function () {
-        return bot.api('execute', {
-          code: "return [API.messages.send(), API.messages.send()];"
-        }).then(res => {
-          if (!res.response) throw new Error('There is no response object')
-          if (!res.execute_errors) throw new Error('There is no errors object')
-        })
+    it('Gets full response object if using `execute` method', function () {
+      return bot.api('execute', {
+        code: "return [API.messages.send(), API.messages.send()];"
+      }).then(res => {
+        if (!res.response) throw new Error('There is no response object')
+        if (!res.execute_errors) throw new Error('There is no errors object')
       })
     })
+
 
     describe('Versions', function () {
       it('Gets error when using peer_id on version 5.37', function () {
