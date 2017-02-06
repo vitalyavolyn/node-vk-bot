@@ -20,7 +20,7 @@ describe('Bot', function () {
       pollingbot.once('update', () => done())
       setTimeout(function() {
         pollingbot.send('Test message', peer)
-      }, 1000) // because sometimes it doesn't work ¯\_(ツ)_/¯ 
+      }, 5000) // because sometimes it doesn't work ¯\_(ツ)_/¯ 
     })
   })
 
