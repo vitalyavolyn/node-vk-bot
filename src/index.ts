@@ -9,6 +9,7 @@ import { VKError, VKExecuteResponse, VKResponse } from './interfaces/APIResponse
 import { UploadedPhoto } from './interfaces/UploadedPhoto'
 import { Message } from './interfaces/Message'
 import { UserEvent } from './interfaces/UserEvent'
+import { MessageSendParams } from './interfaces/MessageSendParams'
 
 export interface Options {
   token: string,
@@ -70,9 +71,9 @@ export default class Bot extends EventEmitter {
    *
    * @returns {Promise}
    */
-  send (text: string, peer: number, params: any = {}) {
-    params.message = text
-    params.peer_id = peer
+  send (text: string, peer: number, params: MessageSendParams = {}) {
+    params.message = params.message || text
+    params.peer_id = params.peer_id || peer
     return this.api('messages.send', params)
   }
 
@@ -168,5 +169,6 @@ export {
   VKError,
   VKExecuteResponse,
   VKResponse,
-  UserEvent
+  UserEvent,
+  MessageSendParams
 }
