@@ -18,7 +18,7 @@ describe('Bot', function () {
 
   describe('#send', function () {
     it('Sends message', function () {
-      return bot.send('Test message 2', peer)
+      return bot.send('Test message', peer)
     })
   })
 
