@@ -38,7 +38,7 @@ export default class Bot extends EventEmitter {
    *
    * @returns {Promise}
    */
-  api (method: string, params: any = {}) {
+  api (method: string, params: any = {}) : Promise<VKResponse | VKExecuteResponse> {
     let o = this.options
     if (o.api) {
       params.v = params.v || o.api.v || 5.62
@@ -71,7 +71,7 @@ export default class Bot extends EventEmitter {
    *
    * @returns {Promise}
    */
-  send (text: string, peer: number, params: MessageSendParams = {}) {
+  send (text: string, peer: number, params: MessageSendParams = {}) : Promise<VKResponse> {
     params.message = params.message || text
     params.peer_id = params.peer_id || peer
     return this.api('messages.send', params)
