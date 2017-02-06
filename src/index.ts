@@ -1,19 +1,14 @@
 import { EventEmitter } from 'events'
 import * as rq from 'request-promise-native'
 import * as fs from 'fs'
-import Message from './functions/Message'
+
+import UpdateToObj from './functions/UpdateToObj'
 import poll from './functions/poll'
 
-export type VKResponse = any
-export interface VKError {
-  name: string,
-  code: number,
-  description: string
-}
-export interface VKExecuteResponse {
-  response?: VKResponse,
-  execute_errors?: VKError[]
-}
+import { VKError, VKExecuteResponse, VKResponse } from './interfaces/APIResponses'
+import { UploadedPhoto } from './interfaces/UploadedPhoto'
+import { Message } from './interfaces/Message'
+import { UserEvent } from './interfaces/UserEvent'
 
 export interface Options {
   token: string,
@@ -21,21 +16,6 @@ export interface Options {
   prefixOnlyInChats?: boolean,
   chats?: number[],
   api?: { lang?: string, v?: number}
-}
-
-export interface Message {
-  id: number,
-  peer_id: number,
-  date: number,
-  title: string,
-  body: string,
-  user_id: number,
-  attachments: any
-}
-
-export interface UserEvent {
-  pattern: RegExp,
-  listener(msg?: Message, exec?: RegExpExecArray) : any
 }
 
 export default class Bot extends EventEmitter {
@@ -129,7 +109,7 @@ export default class Bot extends EventEmitter {
    * Upload photo
    * @returns {Promise}
    */
-  uploadPhoto (path: string) {
+  uploadPhoto (path: string) : Promise<UploadedPhoto> {
     return this.api('photos.getMessagesUploadServer')
       .then(server => rq({
         method: 'POST',
@@ -144,9 +124,15 @@ export default class Bot extends EventEmitter {
         photo: upload.photo,
         hash: upload.hash
       }))
-      .then(photos => photos[0])
+      .then(photos => photos[0] as UploadedPhoto)
   }
 
+  /**
+   * The internal update event listener, used to parse messages and fire
+   * get events - YOU SHOULD NOT USE THIS
+   *
+   * @param {object} update
+   */
   private _update (update) {
     const text = update[6]
     const peer = update[3]
@@ -166,12 +152,21 @@ export default class Bot extends EventEmitter {
     const ev = this._userEvents.find(({ pattern }) => pattern.test(text))
 
     if (!ev) {
-      this.emit('command-notfound', Message(update))
+      this.emit('command-notfound', UpdateToObj(update))
       return
     }
 
-    ev.listener(Message(update), ev.pattern.exec(text))
+    ev.listener(UpdateToObj(update), ev.pattern.exec(text))
   }
 }
 
 (module).exports = Bot
+
+export {
+  Message,
+  UploadedPhoto,
+  VKError,
+  VKExecuteResponse,
+  VKResponse,
+  UserEvent
+}

@@ -1,5 +1,5 @@
 import { Message } from '..'
-export default function Message (update) {
+export default function UpdateToObj (update) {
   let msg = {
     id: update[1],
     peer_id: update[3],
