@@ -53,7 +53,7 @@ describe('Bot', function () {
         return oldVersionBot.api('messages.send', {
           peer_id: peer,
           message: '123'
-        }).then(() => false, () => true)
+        }).then(() => { throw new Error() }, () => true)
       })
     })
   })
