@@ -29,8 +29,22 @@ bot.get(/Hi|Hello|Hey/i, message => {
 })
 ```
 
-# Documentation
-## Getting Started
+# Table of contents
+- [Getting Started](#getting-started)
+- [`Bot`](#bot)
+  - [Methods](#methods)
+    - [`start`](#start)
+    - [`get`](#get)
+    - [`send`](#send)
+    - [`uploadPhoto`](#uploadPhoto)
+    - [`api`](#api)
+    - [`stop`](#stop)
+  - [Events](#events)
+    - [update](#update)
+    - [command-notfound](#command-notfound)
+- [The `Message` Object](#the-message-object)
+
+## Getting Started <a name="getting-started"></a>
 To get updates from the server, we use [polling](https://vk.com/dev/using_longpoll).
 
 In the example above you can see a super simple VK Bot. This bot will answer our greetings, that's all.
@@ -46,7 +60,7 @@ The API is simple as possible, still, if you have any suggestions about simplify
 
 -------
 
-### Bot
+## Bot <a name="bot"></a>
 The class used to create new bots, it takes a single argument, an `options` object.
 
 ```javascript
@@ -80,8 +94,8 @@ If `chats` is set, the bot will work only with messages from these chats
 
 -------
 
-#### Methods
-##### start
+### Methods <a name="methods"></a>
+#### start <a name="start"></a>
 Starts polling updates from API.
 Emits an `update` event after getting updates with the response from server.
 [Update examples](https://vk.com/dev/using_longpoll).
@@ -90,7 +104,7 @@ See  [`poll.js`](https://github.com/Eblonko/node-vk-bot/blob/master/src/function
 
 -------
 
-##### get
+#### get <a name="get"></a>
 Listens on specific message matching the RegExp pattern.
 ```javascript
 bot.get(/Hello/i, msg => {
@@ -102,7 +116,7 @@ The argument passed to callback is a [`Message`](https://github.com/Eblonko/node
 
 -------
 
-##### send
+#### send <a name="send"></a>
 Sends message.
 
 ```javascript
@@ -111,7 +125,7 @@ bot.send('text', peer_id, params)
 
 -------
 
-##### uploadPhoto
+#### uploadPhoto <a name="uploadPhoto"></a>
 Upload a photo.
 
 The only parameter is an absolute path to picture.
@@ -124,7 +138,7 @@ bot.uploadPhoto('~/kittens.png').then(photo => {
 
 -------
 
-##### api
+#### api <a name="api"></a>
 Access VK API.
 
 ```javascript
@@ -135,7 +149,7 @@ Attention! When using `execute` method, this function returns full response obje
 
 -------
 
-##### stop
+#### stop <a name="stop"></a>
 Stops the bot from listening on updates.
 
 ```javascript
@@ -144,8 +158,8 @@ bot.stop()
 
 -------
 
-#### Events
-##### update
+### Events <a name="events"></a>
+#### update <a name="update"></a>
 The update event is emitted whenever there is a response from LongPoll.
 
 ```javascript
@@ -157,7 +171,7 @@ bot.on('update', update => {
 ```
 -------
 
-##### command-notfound
+#### command-notfound <a name="command-notfound"></a>
 This event is emitted whenever there's no `.get()` listeners matching
 
 ```javascript
@@ -168,7 +182,7 @@ bot.on('command-notfound', msg => {
 
 -------
 
-### The `Message` Object
+## The `Message` Object <a name="the-message-object"></a>
 ```typescript
 interface Message {
   id: number, // message id
