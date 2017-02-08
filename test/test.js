@@ -1,5 +1,5 @@
 const { describe, it } = require('mocha')
-const Bot = require('..')
+const { Bot } = require('..')
 const path = require('path')
 
 const peer = process.env.TEST_PEER_ID

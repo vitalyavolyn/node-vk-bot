@@ -19,7 +19,7 @@ export interface Options {
   api?: { lang?: string, v?: number}
 }
 
-export default class Bot extends EventEmitter {
+export class Bot extends EventEmitter {
   _events: Object = {}
   _userEvents: UserEvent[] = []
   _stop: boolean = false
@@ -28,7 +28,6 @@ export default class Bot extends EventEmitter {
     super()
 
     if (!options.token) throw new Error('Token can\'t be empty')
-    this.options = options
   }
 
   /**
@@ -160,8 +159,6 @@ export default class Bot extends EventEmitter {
     ev.listener(UpdateToObj(update), ev.pattern.exec(text))
   }
 }
-
-(module).exports = Bot
 
 export {
   Message,
