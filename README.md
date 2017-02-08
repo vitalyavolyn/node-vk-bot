@@ -53,6 +53,12 @@ Let's explain the code, it's pretty simple.
 
 1. First of all, you have to import the library.
 2. Then I create a bot instance, with my [token](https://vk.com/dev/access_token).
+   
+   get yourself one:
+   ```
+   https://oauth.vk.com/authorize?client_id= YOUR APP ID &scope=photos,messages,offline&display=touch&response_type=token
+   ```
+   
 3. By calling `bot.start()` the bot starts polling updates from the server.
 4. Then I simply listen on messages which pass the RegExp test, when I get such message, Then I send a new message with text 'Hello' to that chat with a forwarded message.
 
