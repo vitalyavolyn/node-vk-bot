@@ -12,5 +12,9 @@
     "declaration": true,
     "rootDir": "./src",
     "outDir": "./build"
-  }
+  },
+  "exclude": [
+    "./examples",
+    "./node_modules"
+  ]
 }
