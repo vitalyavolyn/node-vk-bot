@@ -75,4 +75,11 @@ describe('Bot', function () {
       return bot.uploadPhoto(img)
     })
   })
+
+  describe('#stop', function () {
+    it('Stops', function () {
+      pollingbot.stop()
+      if (pollingbot._stop && pollingbot._events === {}) done() 
+    })
+  })
 })
