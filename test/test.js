@@ -40,16 +40,24 @@ describe('Bot', function () {
           })
       })
     })
-      
-    it('Gets full response object if using `execute` method', function () {
-      return bot.api('execute', {
-        code: "return [API.messages.send(), API.messages.send()];"
-      }).then(res => {
-        if (!res.response) throw new Error('There is no response object')
-        if (!res.execute_errors) throw new Error('There is no errors object')
+    
+    describe('execute', function () {
+      it('Gets full response object if using `execute` method', function () {
+        return bot.api('execute', {
+          code: "return [API.messages.send(), API.messages.send()];"
+        }).then(res => {
+          if (!res.response) throw new Error('There is no response object')
+          if (!res.execute_errors) throw new Error('There is no errors object')
+        })
+      })
+
+      it('Fails on using non-existing stored function', function () {
+        return bot.api('execute.QWERTYUIOP')
+          .then(res => {
+            if (!res.error.error_code === 3) { throw new Error() }
+          })
       })
     })
-
 
     describe('Versions', function () {
       it('Gets error when using peer_id on version 5.37', function () {

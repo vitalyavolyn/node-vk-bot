@@ -54,10 +54,10 @@ export class Bot extends EventEmitter {
       method: 'POST',
       json: true
     }).then(res => {
-      if (res.error) {
-        throw res.error as VKError
-      } else if (/execute/.test(method)) { // there may be errors and responses in same object
+      if (/execute/.test(method)) { // there may be errors and responses in same object
         return res as VKExecuteResponse
+      } else if (res.error) {
+        throw res.error as VKError
       }
       return res.response as VKResponse
     })
