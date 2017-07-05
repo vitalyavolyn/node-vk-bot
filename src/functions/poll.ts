@@ -8,7 +8,12 @@ export default function poll (bot) {
       return request(`https://${res.server}?act=a_check&key=${res.key}` +
         `&wait=25&mode=2&version=1&ts=${res.ts}`)
     })
-    .catch(() => poll(bot))
+    .catch(error => {
+      bot.emit('poll-error', error)
+
+      // перезапуск при ошибке
+      return poll(bot)
+    })
 
   function request (url) {
     return rq(url, { json: true })
