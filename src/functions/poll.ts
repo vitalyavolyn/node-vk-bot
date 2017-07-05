@@ -5,7 +5,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 export default function poll (bot) {
   return bot.api('messages.getLongPollServer')
     .then(res => {
-      request(`https://${res.server}?act=a_check&key=${res.key}` +
+      return request(`https://${res.server}?act=a_check&key=${res.key}` +
         `&wait=25&mode=2&version=1&ts=${res.ts}`)
     })
     .catch(() => poll(bot))
@@ -13,7 +13,9 @@ export default function poll (bot) {
   function request (url) {
     return rq(url, { json: true })
       .then(res => {
-        if (!res || !res.ts || res.failed) return poll(bot) // перезапуск при ошибке
+        if (!res || !res.ts || res.failed)
+          throw new Error("response of the Long Poll server isn't valid " +
+            `(${JSON.stringify(res)})`)
         url = url.replace(/ts=.*/, `ts=${res.ts}`) // ставим новое время
 
         if (res.updates.length > 0) {
@@ -25,6 +27,6 @@ export default function poll (bot) {
 
         if (bot._stop) return null
         return sleep(300).then(() => request(url))
-      }, () => poll(bot))
+      })
   }
 }
