@@ -86,7 +86,7 @@ new Bot({
 })
 ```
 
-| Parameter | Type | Requried |
+| Parameter | Type | Required |
 |-----------|:----:|---------:|
 | token     | String | Yes |
 | prefix    | RexExp | No |
@@ -195,7 +195,7 @@ This event is emitted whenever there's no `.get()` listeners matching
 ```javascript
 bot.on('command-notfound', msg => {
   bot.send('What?', msg.peer_id)
-}
+})
 ```
 
 -------
