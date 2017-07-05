@@ -41,6 +41,7 @@ bot.get(/Hi|Hello|Hey/i, message => {
     - [`stop`](#stop)
   - [Events](#events)
     - [update](#update)
+    - [poll-error](#poll-error)
     - [command-notfound](#command-notfound)
 - [The `Message` Object](#the-message-object)
 
@@ -173,6 +174,17 @@ bot.on('update', update => {
   if (update[7].from === 1) {
     console.log('Got an message from Pavel Durov!');
   }
+})
+```
+-------
+
+#### poll-error <a name="poll-error"></a>
+The poll-error event is emitted whenever there is an error occurred in LongPoll.
+
+```javascript
+bot.on('poll-error', error => {
+  console.error('error occurred on a working with the Long Poll server ' +
+    `(${util.inspect(error)})`)
 })
 ```
 -------
