@@ -1,5 +1,7 @@
 import * as rq from 'request-promise-native'
 
+const DEFAULT_DELAY = 334 // 1/3 of a second
+
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 export default function poll (bot) {
@@ -31,7 +33,7 @@ export default function poll (bot) {
         }
 
         if (bot._stop) return null
-        return sleep(300).then(() => request(url))
+        return sleep(DEFAULT_DELAY).then(() => request(url))
       })
   }
 }
