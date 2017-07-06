@@ -4,20 +4,20 @@ const DEFAULT_DELAY = 334 // 1/3 of a second
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-export default function poll (bot) {
+export default function poll (bot, delay: number = DEFAULT_DELAY) {
   return bot.api('messages.getLongPollServer')
     .then(res => {
       return request(`https://${res.server}?act=a_check&key=${res.key}` +
-        `&wait=25&mode=2&version=1&ts=${res.ts}`)
+        `&wait=25&mode=2&version=1&ts=${res.ts}`, delay)
     })
     .catch(error => {
       bot.emit('poll-error', error)
 
       // перезапуск при ошибке
-      return poll(bot)
+      return poll(bot, delay)
     })
 
-  function request (url) {
+  function request (url, delay: number) {
     return rq(url, { json: true })
       .then(res => {
         if (!res || !res.ts || res.failed)
@@ -33,7 +33,7 @@ export default function poll (bot) {
         }
 
         if (bot._stop) return null
-        return sleep(DEFAULT_DELAY).then(() => request(url))
+        return sleep(delay).then(() => request(url, delay))
       })
   }
 }
