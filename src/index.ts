@@ -78,11 +78,12 @@ export class Bot extends EventEmitter {
 
   /**
    * Start polling
+   * @param {number} poll_delay A delay before a restart of the Long Poll client
    * @returns The bot object
    */
-  start () {
+  start (poll_delay?: number) {
     this.on('update', this._update)
-    poll(this)
+    poll(this, poll_delay)
     return this
   }
 
