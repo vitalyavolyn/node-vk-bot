@@ -140,7 +140,7 @@ export class Bot extends EventEmitter {
     const isChat = peer > 2e9
 
     if (!text) return
-    if (this.options.chats.length && !this.options.chats.includes(peer)) return
+    if (this.options.chats && this.options.chats.length && !this.options.chats.includes(peer)) return
 
     if (this.options.prefix) {
       const p = this.options.prefix
