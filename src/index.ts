@@ -135,8 +135,9 @@ export class Bot extends EventEmitter {
    * @param {object} update
    */
   private _update (update) {
-    const text = update[6]
-    const peer = update[3]
+    const text : string = update[6]
+    const peer : number = update[3]
+    const flag : number = update[2]
     const isChat = peer > 2e9
 
     if (!text) return
@@ -148,8 +149,9 @@ export class Bot extends EventEmitter {
         if (!this.options.prefixOnlyInChats) return
         if (this.options.prefixOnlyInChats && isChat) return
       }
+    } else {
+      if (flag & 2) return // if message is outcoming
     }
-
     const ev = this._userEvents.find(({ pattern }) => pattern.test(text))
 
     if (!ev) {
