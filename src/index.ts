@@ -139,6 +139,7 @@ export class Bot extends EventEmitter {
     const peer : number = update[3]
     const flag : number = update[2]
     const isChat = peer > 2e9
+    const isOutcoming = flag & 2
 
     if (!text) return
     if (this.options.chats && this.options.chats.length && !this.options.chats.includes(peer)) return
@@ -147,10 +148,10 @@ export class Bot extends EventEmitter {
       const p = this.options.prefix
       if (text.search(p) !== 0) { // not starts with prefix
         if (!this.options.prefixOnlyInChats) return
-        if (this.options.prefixOnlyInChats && isChat) return
+        if (this.options.prefixOnlyInChats && (isChat || isOutcoming)) return
       }
     } else {
-      if (flag & 2) return // if message is outcoming
+      if (isOutcoming) return
     }
     const ev = this._userEvents.find(({ pattern }) => pattern.test(text))
 
