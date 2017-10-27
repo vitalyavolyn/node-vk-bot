@@ -140,8 +140,9 @@ export class Bot extends EventEmitter {
     const flag : number = update[2]
     const isChat = peer > 2e9
     const isOutcoming = flag & 2
+    const hasAttachments : boolean = !!Object.keys(update[7]).length
 
-    if (!text) return
+    if (!text && !hasAttachments) return
     if (this.options.chats && this.options.chats.length && !this.options.chats.includes(peer)) return
 
     if (this.options.prefix) {
