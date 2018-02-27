@@ -3,6 +3,8 @@
 
 # VK BOTS
 Create and control VK bots easily.
+Works with both profile and group tokens!
+
 ```sh
 npm install --save node-vk-bot
 ```
