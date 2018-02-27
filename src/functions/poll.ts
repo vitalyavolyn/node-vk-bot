@@ -1,6 +1,7 @@
 import * as rq from 'request-promise-native'
 
 const DEFAULT_DELAY = 334 // 1/3 of a second
+const LOST_HISTORY_ERROR = 1
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -20,12 +21,15 @@ export default function poll (bot, delay: number = DEFAULT_DELAY) {
   function request (url, delay: number) {
     return rq(url, { json: true })
       .then(res => {
-        if (!res || !res.ts || res.failed)
+        if (!res || !res.ts || (res.failed && res.failed !== LOST_HISTORY_ERROR))
           throw new Error("response of the Long Poll server isn't valid " +
             `(${JSON.stringify(res)})`)
+        if (res.failed && res.failed === LOST_HISTORY_ERROR)
+          bot.emit('poll-error', new Error('event history went out of date ' +
+            'or was partially lost'))
         url = url.replace(/ts=.*/, `ts=${res.ts}`) // ставим новое время
 
-        if (res.updates.length > 0) {
+        if (!res.failed && res.updates && res.updates.length > 0) {
           for (let i = 0; i < res.updates.length; i++) {
             let update = res.updates[i]
             if (update[0] === 4) bot.emit('update', update)
