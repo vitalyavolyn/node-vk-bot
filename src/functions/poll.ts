@@ -37,7 +37,9 @@ export default function poll (bot, delay: number = DEFAULT_DELAY) {
         }
 
         if (bot._stop) return null
-        return sleep(delay).then(() => request(url, delay))
+        return delay !== 0
+          ? sleep(delay).then(() => request(url, delay))
+          : request(url, delay)
       })
   }
 }
