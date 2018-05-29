@@ -142,6 +142,9 @@ export class Bot extends EventEmitter {
     const isOutcoming = flag & 2
     const hasAttachments : boolean = !!Object.keys(update[7]).length
 
+    if (hasAttachments && update[7].attach1_type == 'sticker') return this.emit('sticker', UpdateToObj(update))
+    if (hasAttachments && update[7].attach1_type == 'doc' && update[7].attach1_kind == 'audiomsg') return this.emit('voice', UpdateToObj(update))
+
     if (!text && !hasAttachments) return
     if (this.options.chats && this.options.chats.length && !this.options.chats.includes(peer)) return
 

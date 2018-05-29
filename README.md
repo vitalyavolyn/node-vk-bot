@@ -43,6 +43,8 @@ bot.get(/Hi|Hello|Hey/i, message => {
     - [`stop`](#stop)
   - [Events](#events)
     - [update](#update)
+    - [voice](#voice)
+    - [sticker](#sticker)
     - [poll-error](#poll-error)
     - [command-notfound](#command-notfound)
 - [The `Message` Object](#the-message-object)
@@ -174,11 +176,20 @@ The update event is emitted whenever there is a response from LongPoll.
 ```javascript
 bot.on('update', update => {
   if (update[7].from === 1) {
-    console.log('Got an message from Pavel Durov!');
+    console.log('Got a message from Pavel Durov!');
   }
 })
 ```
 -------
+
+#### voice <a name="voice"></a>
+The voice event is emitted whenever there is a new voice message. (emits `Message` object)
+-------
+
+#### sticker <a name="sticker"></a>
+The sticker event is emitted whenever there is a new incoming sticker. (emits `Message` object)
+-------
+
 
 #### poll-error <a name="poll-error"></a>
 The poll-error event is emitted whenever there is an error occurred in LongPoll.
