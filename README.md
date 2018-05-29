@@ -184,10 +184,12 @@ bot.on('update', update => {
 
 #### voice <a name="voice"></a>
 The voice event is emitted whenever there is a new voice message. (emits `Message` object)
+
 -------
 
 #### sticker <a name="sticker"></a>
 The sticker event is emitted whenever there is a new incoming sticker. (emits `Message` object)
+
 -------
 
 
