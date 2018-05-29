@@ -1,6 +1,6 @@
 {
   "name": "node-vk-bot",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "description": "Create and control VK bots easily.",
   "main": "./build/index.js",
   "typings": "./build/index.d.ts",
@@ -28,12 +28,12 @@
     "grunt-contrib-clean": "^1.0.0",
     "grunt-ts": "^6.0.0-beta.17",
     "grunt-tslint": "^4.0.0",
-    "mocha": "^3.5.3",
+    "mocha": "^5.2.0",
     "tslint": "^4.4.2",
     "typescript": "^2.7.2"
   },
   "dependencies": {
-    "request": "^2.83.0",
+    "request": "^2.87.0",
     "request-promise-native": "^1.0.5"
   }
 }
