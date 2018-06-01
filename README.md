@@ -1,6 +1,8 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a0950ccdf7b54dd7a7b7bc23fa7e7123)](https://www.codacy.com/app/Eblonko/node-vk-bot?utm_source=github.com&utm_medium=referral&utm_content=Eblonko/node-vk-bot&utm_campaign=badger)
 [![CircleCI](https://circleci.com/gh/vitalyavolyn/node-vk-bot.svg?style=shield)](https://circleci.com/gh/vitalyavolyn/node-vk-bot)
 
+[README на русском](https://github.com/vitalyavolyn/node-vk-bot/blob/master/README_ru.md)
+
 # VK BOTS
 Create and control VK bots easily.
 Works with both profile and group tokens!
@@ -15,7 +17,7 @@ If you are cloning this repository, remember to run `npm install` to install dep
 
 # Example <a name="example"></a>
 ```javascript
-// ES6 and TypeScript
+// TypeScript
 import { Bot } from 'node-vk-bot'
 
 // ES5
@@ -84,24 +86,19 @@ Set up webhook URL in community settings
 - [The `Message` Object](#the-message-object)
 
 ## Getting Started <a name="getting-started"></a>
-To get updates from the server, we use [polling](https://vk.com/dev/using_longpoll).
-
 In the example above you can see a super simple VK Bot. This bot will answer our greetings, that's all.
 
 Let's explain the code, it's pretty simple.
 
-1. First of all, you have to import the library.
-2. Then I create a bot instance, with my [token](https://vk.com/dev/access_token).
+1. Then I create a bot instance, with my [token](https://vk.com/dev/access_token).
    
    get yourself one:
    ```
    https://oauth.vk.com/authorize?client_id= YOUR APP ID &scope=photos,messages,offline&display=touch&response_type=token
    ```
    
-3. By calling `bot.start()` the bot starts polling updates from the server.
-4. Then I simply listen on messages which pass the RegExp test, when I get such message, Then I send a new message with text 'Hello' to that chat with a forwarded message.
-
-The API is simple as possible, still, if you have any suggestions about simplifying the API, please fill an [issue](https://github.com/Eblonko/node-vk-bot/issues/new).
+2. By calling `bot.start()` the bot starts polling updates from the server.
+3. Then I simply listen on messages which pass the RegExp test, when I get such message, Then I send a new message with text 'Hello' to that chat with a forwarded message.
 
 -------
 
@@ -118,7 +115,7 @@ new Bot({
     2e9 + 12
   ],
   api: {
-    v: 5.62, // must be >= 5.38
+    v: 5.62, // >= 5.38
     lang: 'ru'
   }
 })
@@ -132,7 +129,7 @@ new Bot({
 | chats     | Array | No |
 | api       | Object| No |
 
-If `prefix` is set, the bot will work only with messages with prefix match. (if `prefixOnlyInChats` is `true`, then prefix will be checked only for messages from group chats)<br>
+If `prefix` is set, the bot will work only with messages with prefix match. (if `prefixOnlyInChats` is `true`, then prefix will be checked only for messages from group chats). `prefix` isn't chacked if using Callback API.<br>
 If `chats` is set, the bot will work only with messages from these chats
 
 `api` is object with API settings: **v**ersion and **lang**uage. ([Read more](https://vk.com/dev/api_requests))
@@ -145,19 +142,17 @@ Starts polling updates from API.
 Emits an `update` event after getting updates with the response from server.
 [Update examples](https://vk.com/dev/using_longpoll).
 
-See  [`poll.js`](https://github.com/Eblonko/node-vk-bot/blob/master/src/functions/poll.js) for more info.
-
 -------
 
 #### get <a name="get"></a>
 Listens on specific message matching the RegExp pattern.
 ```javascript
-bot.get(/Hello/i, msg => {
+bot.get(/Hello/i, (msg, exec) => {
   console.log(msg)
 })
 ```
 
-The argument passed to callback is a [`Message`](https://github.com/Eblonko/node-vk-bot#the-message-object) object and result of `pattern.exec(text)`.
+The argument passed to callback is a [`Message`](#the-message-object) object and result of `pattern.exec(text)`.
 
 -------
 
@@ -188,9 +183,10 @@ Access VK API.
 
 ```javascript
 bot.api('users.get', { user_ids: 1 })
+  .then(res => console.log(res[0].first_name)) // Pavel
 ```
 
-Attention! When using `execute` method, this function returns full response object. (Because there may be errors and responses in same object).
+When using `execute` method, this function returns full response object. (Because there may be errors and responses in same object).
 
 -------
 
