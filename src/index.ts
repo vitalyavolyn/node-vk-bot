@@ -23,14 +23,11 @@ export class Bot extends EventEmitter {
   _events: Object = {}
   _userEvents: UserEvent[] = []
   _stop: boolean = false
-  _isCommunity = false
 
   constructor (public options: Options) {
     super()
 
     if (!options.token) throw new Error('Token can\'t be empty')
-    this.api('users.get')
-      .then(res => { if (res.length === 0) this._isCommunity = true })
   }
 
   /**
