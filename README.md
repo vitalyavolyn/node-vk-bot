@@ -4,6 +4,8 @@
 # VK BOTS
 Create and control VK bots easily.
 Works with both profile and group tokens!
+Uses LongPoll to get new messages
+Supports Callback API for communities
 
 ```sh
 npm install --save node-vk-bot
@@ -11,7 +13,7 @@ npm install --save node-vk-bot
 
 If you are cloning this repository, remember to run `npm install` to install dependencies.
 
-# Example
+# Example <a name="example"></a>
 ```javascript
 // ES6 and TypeScript
 import { Bot } from 'node-vk-bot'
@@ -31,6 +33,37 @@ bot.get(/Hi|Hello|Hey/i, message => {
 })
 ```
 
+Using webhook:
+```javascript
+const express = require('express');
+const bodyParser = require('body-parser');
+const { Bot } = require('node-vk-bot');
+const bot = new Bot({
+    token: 'Community API token'
+})
+
+const port = 8000
+const app = express();
+
+app.use(bodyParser.json());
+
+app.post('/bot', (req, res) => {
+  if (req.body.type == 'confirmation') res.send('CONFIRMATION CODE')
+  bot.processUpdate(req.body);
+  res.sendStatus(200);
+});
+
+app.listen(port, () => {
+  console.log(`Express server is listening on ${port}`);
+});
+
+bot.get(/Hi|Hello|Hey/i, message => {
+  bot.send('Hello!', message.peer_id)
+})
+```
+
+Set up webhook URL in community settings
+
 # Table of contents
 - [Getting Started](#getting-started)
 - [`Bot`](#bot)
@@ -40,6 +73,7 @@ bot.get(/Hi|Hello|Hey/i, message => {
     - [`send`](#send)
     - [`uploadPhoto`](#uploadPhoto)
     - [`api`](#api)
+    - [`processUpdate`](#processUpdate)
     - [`stop`](#stop)
   - [Events](#events)
     - [update](#update)
@@ -157,6 +191,12 @@ bot.api('users.get', { user_ids: 1 })
 ```
 
 Attention! When using `execute` method, this function returns full response object. (Because there may be errors and responses in same object).
+
+-------
+
+#### processUpdate <a name="processUpdate"></a>
+Process an update from Callback API.
+[Example](#example)
 
 -------
 

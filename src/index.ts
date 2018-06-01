@@ -23,11 +23,14 @@ export class Bot extends EventEmitter {
   _events: Object = {}
   _userEvents: UserEvent[] = []
   _stop: boolean = false
+  _isCommunity = false
 
   constructor (public options: Options) {
     super()
 
     if (!options.token) throw new Error('Token can\'t be empty')
+    this.api('users.get')
+      .then(res => { if (res.length === 0) this._isCommunity = true })
   }
 
   /**
@@ -74,6 +77,45 @@ export class Bot extends EventEmitter {
     params.message = params.message || text
     params.peer_id = params.peer_id || peer
     return this.api('messages.send', params)
+  }
+
+  /**
+   * Process Callback API response when using webhook
+   * @param res Callback API response
+   */
+  processUpdate (res: any) {
+    if (res.type === 'message_new') {
+      let msg = res.object
+      const text : string = msg.body
+      const peer : number = msg.user_id
+
+      const hasAttachments : boolean = !!msg.attachments
+
+      const message : Message = {
+        id: msg.id,
+        peer_id: peer,
+        date: msg.date,
+        title: msg.title,
+        body: text,
+        user_id: peer,
+        attachments: msg.attachments || []
+      }
+      if (hasAttachments && msg.attachments[0].type === 'sticker') return this.emit('sticker', message)
+      if (hasAttachments && msg.attachments[0].type === 'doc' && msg.attachments[0].doc.preview.audio_msg) return this.emit('voice', message)
+
+      if (!text && !hasAttachments) return
+      if (this.options.chats && this.options.chats.length && !this.options.chats.includes(peer)) return
+
+      const ev = this._userEvents.find(({ pattern }) => pattern.test(text))
+
+      if (!ev) {
+        this.emit('command-notfound', message)
+        return
+      }
+
+      ev.listener(message, ev.pattern.exec(text))
+
+    }
   }
 
   /**
@@ -129,7 +171,8 @@ export class Bot extends EventEmitter {
   }
 
   /**
-   * The internal update event listener, used to parse messages and fire
+   * The internal update event listener for LongPoll,
+   * used to parse messages and fire
    * get events - YOU SHOULD NOT USE THIS
    *
    * @param {object} update
@@ -142,8 +185,8 @@ export class Bot extends EventEmitter {
     const isOutcoming = flag & 2
     const hasAttachments : boolean = !!Object.keys(update[7]).length
 
-    if (hasAttachments && update[7].attach1_type == 'sticker') return this.emit('sticker', UpdateToObj(update))
-    if (hasAttachments && update[7].attach1_type == 'doc' && update[7].attach1_kind == 'audiomsg') return this.emit('voice', UpdateToObj(update))
+    if (hasAttachments && update[7].attach1_type === 'sticker') return this.emit('sticker', UpdateToObj(update))
+    if (hasAttachments && update[7].attach1_type === 'doc' && update[7].attach1_kind === 'audiomsg') return this.emit('voice', UpdateToObj(update))
 
     if (!text && !hasAttachments) return
     if (this.options.chats && this.options.chats.length && !this.options.chats.includes(peer)) return
