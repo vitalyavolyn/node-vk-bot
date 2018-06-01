@@ -1,7 +1,7 @@
 const { describe, it } = require('mocha')
 const { Bot } = require('..')
 const path = require('path')
-
+const sleep = require('system-sleep')
 const peer = process.env.TEST_PEER_ID
 const token = process.env.TEST_VK_TOKEN
 
@@ -21,6 +21,7 @@ describe('Bot', function () {
       return bot.send('Test message', peer)
     })
   })
+  sleep(500)
 
   describe('#api', function () {
     describe('Languages', function () {
@@ -31,6 +32,7 @@ describe('Bot', function () {
             if (durov.first_name !== 'Павел') throw new Error()
           })
       })
+      sleep(500)
       
       it('Gets response in English', function () {
         return engbot.api('users.get', { user_ids: 1 })
@@ -40,7 +42,8 @@ describe('Bot', function () {
           })
       })
     })
-    
+    sleep(500)
+
     describe('execute', function () {
       it('Gets full response object if using `execute` method', function () {
         return bot.api('execute', {
@@ -50,7 +53,7 @@ describe('Bot', function () {
           if (!res.execute_errors) throw new Error('There is no errors object')
         })
       })
-
+    
       it('Fails on using non-existing stored function', function () {
         return bot.api('execute.QWERTYUIOP')
           .then(res => {
@@ -58,6 +61,7 @@ describe('Bot', function () {
           })
       })
     })
+    sleep(500)
 
     describe('Versions', function () {
       it('Gets error when using peer_id on version 5.37', function () {
