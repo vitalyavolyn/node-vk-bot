@@ -4,10 +4,10 @@
 [README на русском](https://github.com/vitalyavolyn/node-vk-bot/blob/master/README_ru.md)
 
 # VK BOTS
-Create and control VK bots easily.
-Works with both profile and group tokens!
-Uses LongPoll to get new messages
-Supports Callback API for communities
+- Create and control VK bots easily.
+- Works with both profile and group tokens!
+- Uses LongPoll to get new messages
+- Supports Callback API for communities
 
 ```sh
 npm install --save node-vk-bot
@@ -64,7 +64,12 @@ bot.get(/Hi|Hello|Hey/i, message => {
 })
 ```
 
-Set up webhook URL in community settings
+(set up webhook URL in community settings)
+
+# Bots created with this library
+if you want your bot to be in this list, just make a pull request
+
+- [**GitHub Events**](https://vk.com/githubbot) - Notifies you about new issues, commits, etc. in private messages _by [@vitalyavolyn](https://github.com/vitalyavolyn)_
 
 # Table of contents
 - [Getting Started](#getting-started)
