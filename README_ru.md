@@ -32,37 +32,7 @@ bot.get(/Hi|Hello|Hey/i, message => {
 })
 ```
 
-Тот же пример, используя webhook:
-```javascript
-const express = require('express');
-const bodyParser = require('body-parser');
-const { Bot } = require('node-vk-bot');
-const bot = new Bot({
-    token: 'Community API token'
-})
-
-const port = 8000
-const app = express();
-
-app.use(bodyParser.json());
-
-app.post('/bot', (req, res) => {
-  if (req.body.type == 'confirmation') res.send('CONFIRMATION CODE')
-  bot.processUpdate(req.body);
-  res.sendStatus(200);
-});
-
-app.listen(port, () => {
-  console.log(`Express server is listening on ${port}`);
-});
-
-bot.get(/Hi|Hello|Hey/i, message => {
-  bot.send('Hello!', message.peer_id)
-})
-```
-
-(настройте адрес сервера в настройках сообщества)
-
+[Больше примеров](https://github.com/vitalyavolyn/node-vk-bot/tree/master/examples) (как использовать вебхуки, загружать фото, ...)
 
 # Боты, созданные с помощью этой библиотеки
 если вы хотите добавить своего в этот список, просто сделайте pull request
