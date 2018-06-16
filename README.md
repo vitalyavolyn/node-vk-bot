@@ -65,13 +65,7 @@ In the example above you can see a super simple VK Bot. This bot will answer our
 
 Let's explain the code, it's pretty simple.
 
-1. Then I create a bot instance, with my [token](https://vk.com/dev/access_token).
-   
-   get yourself one:
-   ```
-   https://oauth.vk.com/authorize?client_id= YOUR APP ID &scope=photos,messages,offline&display=touch&response_type=token
-   ```
-   
+1. Then I create a bot instance with my [token](https://vk.com/dev/access_token). (token must have photos, messages, offline scope for users)   
 2. By calling `bot.start()` the bot starts polling updates from the server.
 3. Then I simply listen on messages which pass the RegExp test, when I get such message, Then I send a new message with text 'Hello' to that chat with a forwarded message.
 

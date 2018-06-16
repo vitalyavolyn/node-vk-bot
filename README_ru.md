@@ -61,13 +61,7 @@ bot.get(/Hi|Hello|Hey/i, message => {
 В примере выше показан бот, который лишь отвечает на приветствия
 
 Разберем код примера c LongPoll
-1. Создаем бота, используя класс `Bot` c [токеном доступа](https://vk.com/dev/access_token).
-   
-   Получить токен:
-   ```
-   https://oauth.vk.com/authorize?client_id= АЙДИ ПРИЛОЖЕНИЯ ВК &scope=photos,messages,offline&display=touch&response_type=token
-   ```
-
+1. Создаем бота, используя класс `Bot` c [токеном доступа](https://vk.com/dev/access_token). (токен должен иметь scope=photos,messages,offline для страниц пользователей)
 2. Вызов `bot.start()` начинает получение новых сообщений.
 3. Затем мы тестируем каждое входящее сообщение с помощью `/Hi|Hello|Hey/i`, и если сообщеине подходит, отвечаем на него.
 
