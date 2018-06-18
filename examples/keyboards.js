@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { Bot } = require('node-vk-bot');
 const bot = new Bot({
-    token: 'Community API token'
+    token: 'Community API token',
+    group_id: 123456
 });
 
 const port = 8000;
@@ -44,4 +45,4 @@ bot.get(/Hi|Hello|Hey/i, message => {
     });
 });
 
-bot.get(/Red|Green/, msg => bot.send('You clicked a button - ' + msg.body, msg.peer_id)
+bot.get(/Red|Green/, msg => bot.send('You clicked a button - ' + msg.body, msg.peer_id))

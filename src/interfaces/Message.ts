@@ -2,8 +2,10 @@ export interface Message {
   id: number,
   peer_id: number,
   date: number,
-  title: string,
-  body: string,
-  user_id: number,
-  attachments: any
+  text: string,
+  from_id: number,
+  attachments: any,
+  important: boolean,
+  conversation_message_id: number,
+  fwd_messages: any
 }

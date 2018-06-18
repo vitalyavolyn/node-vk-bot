@@ -2,8 +2,7 @@
 
 # Боты ВКонтакте
 Библиотека для создания чат-ботов ВК.
-Поддерживает создание ботоов и на страницах пользователей, и в сообществах.
-Для получения новых сообщений используется LongPoll, для сообществ также можно использовать Callback API.
+Для получения новых сообщений используется LongPoll или Callback API.
 
 ```sh
 npm install --save node-vk-bot
@@ -21,7 +20,7 @@ const { Bot } = require('node-vk-bot')
 
 const bot = new Bot({
   token: 'YOUR TOKEN',
-  prefix: /^Bot[\s,]/
+  group_id: 123456
 }).start()
 
 bot.get(/Hi|Hello|Hey/i, message => {
@@ -61,7 +60,7 @@ bot.get(/Hi|Hello|Hey/i, message => {
 В примере выше показан бот, который лишь отвечает на приветствия
 
 Разберем код примера c LongPoll
-1. Создаем бота, используя класс `Bot` c [токеном доступа](https://vk.com/dev/access_token). (токен должен иметь scope=photos,messages,offline для страниц пользователей)
+1. Создаем бота, используя класс `Bot`.
 2. Вызов `bot.start()` начинает получение новых сообщений.
 3. Затем мы тестируем каждое входящее сообщение с помощью `/Hi|Hello|Hey/i`, и если сообщеине подходит, отвечаем на него.
 
@@ -72,15 +71,10 @@ bot.get(/Hi|Hello|Hey/i, message => {
 
 ```javascript
 new Bot({
-  token: '5a9bdc30ea18ab4a685a8f773642ba0d', // Нет, этот токен не работает
-  prefix: /^Bot[\s,]/,
-  prefixOnlyInChats: true,
-  chats: [
-    1,
-    2e9 + 12
-  ],
+  token: 'TOKEN',
+  group_id: 123456,
   api: {
-    v: 5.62, // >= 5.38
+    v: 5.62, // >= 5.80
     lang: 'ru'
   }
 })
@@ -89,15 +83,10 @@ new Bot({
 | Параметр | Тип | Обязателен? |
 |-----------|:----:|---------:|
 | token     | String | Да |
-| prefix    | RexExp | Нет |
-| prefixOnlyInChats | Boolean | Нет |
-| chats     | Array | Нет |
+| group_id  | Number | Да |
 | api       | Object| Нет |
 
-Если `prefix` установлен, бот будет работать только с сообщениями, в начале которых есть префикс. (если `prefixOnlyInChats` = `true`, префикс будет проверен только для сообщений из групповых чатов). `prefix` не проверяется, если используется Callback API<br>
-Если указать `chats`, бот будет работать только с сообщениями из этих чатов
-
-`api` - объект с настройками API: **v**ersion и **lang**uage. ([узнать больше](https://vk.com/dev/api_requests))
+`api` - объект с настройками API: **v**ersion и **lang**uage. (и то, и то - строки) ([узнать больше](https://vk.com/dev/api_requests))
 
 -------
 
@@ -157,7 +146,7 @@ bot.api('users.get', { user_ids: 1 })
 
 #### processUpdate <a name="processUpdate"></a>
 Функция для использования Callback API.
-[Пример](#example)
+Пример в папке `examples`
 
 -------
 
@@ -176,7 +165,7 @@ bot.stop()
 
 ```javascript
 bot.on('update', update => {
-  if (update[7].from === 1) {
+  if (update.from_id === 1) {
     console.log('Got a message from Pavel Durov!');
   }
 })
@@ -219,12 +208,16 @@ bot.on('command-notfound', msg => {
 ## Объект `Message` <a name="the-message-object"></a>
 ```typescript
 interface Message {
-  id: number, // message id
-  peer_id: number, // message's chat peer_id
-  date: number, // time (in Unixtime format)
-  title: string, // chat title 
-  body: string, // message text
-  user_id: number, // sender's ID 
-  attachments: Object // vk.com/dev/using_longpoll - see the attachments section
+  id: number,
+  peer_id: number,
+  date: number,
+  text: string,
+  from_id: number,
+  attachments: any,
+  important: boolean,
+  conversation_message_id: number,
+  fwd_messages: any
 }
+
+// https://vk.com/dev/objects/message
 ```

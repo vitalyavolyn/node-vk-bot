@@ -2,7 +2,6 @@ import { EventEmitter } from 'events'
 import * as rq from 'request-promise-native'
 import * as fs from 'fs'
 
-import UpdateToObj from './functions/UpdateToObj'
 import poll from './functions/poll'
 
 import { VKError, VKExecuteResponse, VKResponse } from './interfaces/APIResponses'
@@ -13,10 +12,8 @@ import { MessageSendParams } from './interfaces/MessageSendParams'
 
 export interface Options {
   token: string,
-  prefix?: RegExp,
-  prefixOnlyInChats?: boolean,
-  chats?: number[],
-  api?: { lang?: string, v?: number}
+  api?: { lang?: string, v?: string},
+  group_id: number
 }
 
 export class Bot extends EventEmitter {
@@ -27,7 +24,9 @@ export class Bot extends EventEmitter {
   constructor (public options: Options) {
     super()
 
-    if (!options.token) throw new Error('Token can\'t be empty')
+    if (!options.token) throw new Error('token can\'t be empty')
+    if (!options.group_id) throw new Error('group_id can\'t be empty')
+    if (options.api && Number(options.api.v) < 5.80) throw new Error('API version must be > 5.80')
   }
 
   /**
@@ -40,10 +39,10 @@ export class Bot extends EventEmitter {
   api (method: string, params: any = {}) : Promise<VKResponse | VKExecuteResponse> {
     let o = this.options
     if (o.api) {
-      params.v = params.v || o.api.v || 5.78
+      params.v = params.v || o.api.v || 5.80
       params.lang = params.lang || o.api.lang
       if (params.lang == null) delete params.lang
-    } else params.v = params.v || 5.78
+    } else params.v = params.v || 5.80
 
     params.access_token = this.options.token
 
@@ -81,38 +80,7 @@ export class Bot extends EventEmitter {
    * @param res Callback API response
    */
   processUpdate (res: any) {
-    if (res.type === 'message_new') {
-      let msg = res.object
-      const text : string = msg.body
-      const peer : number = msg.user_id
-
-      const hasAttachments : boolean = !!msg.attachments
-
-      const message : Message = {
-        id: msg.id,
-        peer_id: peer,
-        date: msg.date,
-        title: msg.title,
-        body: text,
-        user_id: peer,
-        attachments: msg.attachments || []
-      }
-      if (hasAttachments && msg.attachments[0].type === 'sticker') return this.emit('sticker', message)
-      if (hasAttachments && msg.attachments[0].type === 'doc' && msg.attachments[0].doc.preview.audio_msg) return this.emit('voice', message)
-
-      if (!text && !hasAttachments) return
-      if (this.options.chats && this.options.chats.length && !this.options.chats.includes(peer)) return
-
-      const ev = this._userEvents.find(({ pattern }) => pattern.test(text))
-
-      if (!ev) {
-        this.emit('command-notfound', message)
-        return
-      }
-
-      ev.listener(message, ev.pattern.exec(text))
-
-    }
+    if (res.type === 'message_new') return this._update(res)
   }
 
   /**
@@ -175,36 +143,35 @@ export class Bot extends EventEmitter {
    * @param {object} update
    */
   private _update (update) {
-    const text : string = update[6]
-    const peer : number = update[3]
-    const flag : number = update[2]
-    const isChat = peer > 2e9
-    const isOutcoming = flag & 2
-    const hasAttachments : boolean = !!Object.keys(update[7]).length
+    let msg = update.object
 
-    if (hasAttachments && update[7].attach1_type === 'sticker') return this.emit('sticker', UpdateToObj(update))
-    if (hasAttachments && update[7].attach1_type === 'doc' && update[7].attach1_kind === 'audiomsg') return this.emit('voice', UpdateToObj(update))
+    const hasAttachments : boolean = msg.attachments.length
 
-    if (!text && !hasAttachments) return
-    if (this.options.chats && this.options.chats.length && !this.options.chats.includes(peer)) return
-
-    if (this.options.prefix) {
-      const p = this.options.prefix
-      if (text.search(p) !== 0) { // not starts with prefix
-        if (!this.options.prefixOnlyInChats) return
-        if (this.options.prefixOnlyInChats && (isChat || isOutcoming)) return
-      }
-    } else {
-      if (isOutcoming) return
+    const message : Message = {
+      id: msg.id,
+      peer_id: msg.peer_id,
+      from_id: msg.from_id,
+      date: msg.date,
+      text: msg.text,
+      attachments: msg.attachments,
+      important: msg.important,
+      conversation_message_id: msg.conversation_message_id,
+      fwd_messages: msg.fwd_messages
     }
-    const ev = this._userEvents.find(({ pattern }) => pattern.test(text))
+
+    if (hasAttachments && msg.attachments[0].type === 'sticker') return this.emit('sticker', message)
+    if (hasAttachments && msg.attachments[0].type === 'doc' && msg.attachments[0].doc.preview.audio_msg) return this.emit('voice', message)
+
+    if (!message.text && !hasAttachments) return
+
+    const ev = this._userEvents.find(({ pattern }) => pattern.test(message.text))
 
     if (!ev) {
-      this.emit('command-notfound', UpdateToObj(update))
+      this.emit('command-notfound', message)
       return
     }
 
-    ev.listener(UpdateToObj(update), ev.pattern.exec(text))
+    ev.listener(message, ev.pattern.exec(message.text))
   }
 }
 

@@ -5,7 +5,7 @@
   "main": "./build/index.js",
   "typings": "./build/index.d.ts",
   "scripts": {
-    "test": "grunt && ./node_modules/mocha/bin/mocha"
+    "test": "grunt"
   },
   "repository": {
     "type": "git",

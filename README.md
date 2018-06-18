@@ -4,9 +4,7 @@
 
 # VK BOTS
 - Create and control VK bots easily.
-- Works with both profile and group tokens!
-- Uses LongPoll to get new messages
-- Supports Callback API for communities
+- Uses LongPoll or Callback API to get new messages
 
 ```sh
 npm install --save node-vk-bot
@@ -24,7 +22,7 @@ const { Bot } = require('node-vk-bot')
 
 const bot = new Bot({
   token: 'YOUR TOKEN',
-  prefix: /^Bot[\s,]/
+  group_id: 123456
 }).start()
 
 bot.get(/Hi|Hello|Hey/i, message => {
@@ -65,7 +63,7 @@ In the example above you can see a super simple VK Bot. This bot will answer our
 
 Let's explain the code, it's pretty simple.
 
-1. Then I create a bot instance with my [token](https://vk.com/dev/access_token). (token must have photos, messages, offline scope for users)   
+1. Then I create a bot instance with my group's token.
 2. By calling `bot.start()` the bot starts polling updates from the server.
 3. Then I simply listen on messages which pass the RegExp test, when I get such message, Then I send a new message with text 'Hello' to that chat with a forwarded message.
 
@@ -76,15 +74,10 @@ The class used to create new bots, it takes a single argument, an `options` obje
 
 ```javascript
 new Bot({
-  token: '5a9bdc30ea18ab4a685a8f773642ba0d', // don't even try to use this token
-  prefix: /^Bot[\s,]/,
-  prefixOnlyInChats: true,
-  chats: [
-    1,
-    2e9 + 12
-  ],
+  token: 'TOKEN',
+  group_id: 123456
   api: {
-    v: 5.62, // >= 5.38
+    v: 5.80, // >= 5.80
     lang: 'ru'
   }
 })
@@ -93,15 +86,10 @@ new Bot({
 | Parameter | Type | Required |
 |-----------|:----:|---------:|
 | token     | String | Yes |
-| prefix    | RexExp | No |
-| prefixOnlyInChats | Boolean | No |
-| chats     | Array | No |
+| group_id  | Number | Yes
 | api       | Object| No |
 
-If `prefix` is set, the bot will work only with messages with prefix match. (if `prefixOnlyInChats` is `true`, then prefix will be checked only for messages from group chats). `prefix` isn't chacked if using Callback API.<br>
-If `chats` is set, the bot will work only with messages from these chats
-
-`api` is object with API settings: **v**ersion and **lang**uage. ([Read more](https://vk.com/dev/api_requests))
+`api` is object with API settings: **v**ersion and **lang**uage. (both strings) ([Read more](https://vk.com/dev/api_requests))
 
 -------
 
@@ -161,7 +149,7 @@ When using `execute` method, this function returns full response object. (Becaus
 
 #### processUpdate <a name="processUpdate"></a>
 Process an update from Callback API.
-[Example](#example)
+Example of usage may be found in `examples` folder
 
 -------
 
@@ -180,7 +168,7 @@ The update event is emitted whenever there is a response from LongPoll.
 
 ```javascript
 bot.on('update', update => {
-  if (update[7].from === 1) {
+  if (update.from_id === 1) {
     console.log('Got a message from Pavel Durov!');
   }
 })
@@ -223,12 +211,16 @@ bot.on('command-notfound', msg => {
 ## The `Message` Object <a name="the-message-object"></a>
 ```typescript
 interface Message {
-  id: number, // message id
-  peer_id: number, // message's chat peer_id
-  date: number, // time (in Unixtime format)
-  title: string, // chat title 
-  body: string, // message text
-  user_id: number, // sender's ID 
-  attachments: Object // vk.com/dev/using_longpoll - see the attachments section
+  id: number,
+  peer_id: number,
+  date: number,
+  text: string,
+  from_id: number,
+  attachments: any,
+  important: boolean,
+  conversation_message_id: number,
+  fwd_messages: any
 }
+
+// Reference: https://vk.com/dev/objects/message
 ```

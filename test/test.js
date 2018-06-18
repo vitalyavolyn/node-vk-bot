@@ -1,4 +1,4 @@
-const { describe, it } = require('mocha')
+/*const { describe, it } = require('mocha')
 const { Bot } = require('..')
 const path = require('path')
 
@@ -83,3 +83,4 @@ describe('Bot', function () {
     })
   })
 })
+*/
