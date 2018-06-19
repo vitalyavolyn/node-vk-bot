@@ -29,4 +29,5 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-ts')
 
   grunt.registerTask('default', ['clean', 'ts'])
+  grunt.registerTask('test', ['tslint'])
 }

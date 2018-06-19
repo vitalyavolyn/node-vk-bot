@@ -5,18 +5,14 @@
   "main": "./build/index.js",
   "typings": "./build/index.d.ts",
   "scripts": {
-    "test": "grunt"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/vitalyavolyn/node-vk-bot"
   },
   "keywords": [
-    "VK",
-    "bot",
-    "api",
-    "ВК",
-    "вконтакте"
+    "VK", "bot", "api", "ВК", "вконтакте"
   ],
   "author": "Vitaly Volynsky",
   "license": "MIT",
@@ -28,7 +24,6 @@
     "grunt-contrib-clean": "^1.0.0",
     "grunt-ts": "^6.0.0-beta.17",
     "grunt-tslint": "^4.0.0",
-    "mocha": "^5.2.0",
     "tslint": "^4.4.2",
     "typescript": "^2.7.2"
   },
