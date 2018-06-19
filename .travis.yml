@@ -2,7 +2,11 @@ language: node_js
 sudo: false
 node_js:
   - "7"
-before_install: npm install -g grunt
-install: npm install
-before_script: grunt
-script: npm test
+before_install: 
+  - npm install -g grunt
+install:
+  - npm install
+before_script: 
+  - grunt
+script:
+  - npm test
