@@ -39,10 +39,10 @@ export class Bot extends EventEmitter {
   api (method: string, params: any = {}) : Promise<VKResponse | VKExecuteResponse> {
     let o = this.options
     if (o.api) {
-      params.v = params.v || o.api.v || 5.80
+      params.v = params.v || o.api.v || '5.80'
       params.lang = params.lang || o.api.lang
       if (params.lang == null) delete params.lang
-    } else params.v = params.v || 5.80
+    } else params.v = params.v || '5.80'
 
     params.access_token = this.options.token
 
