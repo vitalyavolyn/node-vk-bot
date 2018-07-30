@@ -29,7 +29,7 @@
     "grunt-ts": "6.0.0-beta.17",
     "grunt-tslint": "4.0.1",
     "tslint": "4.5.1",
-    "typescript": "2.7.2"
+    "typescript": "2.9.2"
   },
   "dependencies": {
     "request": "^2.87.0",
