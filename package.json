@@ -22,7 +22,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "7.0.67",
-    "@types/request": "2.47.0",
+    "@types/request": "2.47.1",
     "@types/request-promise-native": "1.0.15",
     "grunt": "1.0.3",
     "grunt-contrib-clean": "1.1.0",
