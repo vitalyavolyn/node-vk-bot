@@ -21,7 +21,7 @@
   "author": "Vitaly Volynsky",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "7.0.55",
+    "@types/node": "7.0.67",
     "@types/request": "2.47.0",
     "@types/request-promise-native": "1.0.15",
     "grunt": "1.0.3",
