@@ -21,15 +21,15 @@
   "author": "Vitaly Volynsky",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^7.0.55",
-    "@types/request": "^2.47.0",
+    "@types/node": "7.0.55",
+    "@types/request": "2.47.0",
     "@types/request-promise": "*",
-    "grunt": "^1.0.3",
-    "grunt-contrib-clean": "^1.0.0",
-    "grunt-ts": "^6.0.0-beta.17",
-    "grunt-tslint": "^4.0.0",
-    "tslint": "^4.4.2",
-    "typescript": "^2.7.2"
+    "grunt": "1.0.3",
+    "grunt-contrib-clean": "1.1.0",
+    "grunt-ts": "6.0.0-beta.17",
+    "grunt-tslint": "4.0.1",
+    "tslint": "4.5.1",
+    "typescript": "2.7.2"
   },
   "dependencies": {
     "request": "^2.87.0",
