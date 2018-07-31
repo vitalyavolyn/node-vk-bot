@@ -12,14 +12,22 @@ module.exports = function (grunt) {
       },
       files: {
         src: [
-          'src/**/*.ts',
-          'test/**/*.ts'
+          'src/**/*.ts'
         ]
       }
     },
     ts: {
-      default : {
+      default: {
         tsconfig: true
+      }
+    },
+    mochaTest: {
+      test: {
+        options: {
+          require: 'ts-node/register',
+          timeout: 5000
+        },
+        src: ['test/**/*.ts']
       }
     }
   })
@@ -27,7 +35,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean')
   grunt.loadNpmTasks('grunt-tslint')
   grunt.loadNpmTasks('grunt-ts')
+  grunt.loadNpmTasks('grunt-mocha-test')
 
   grunt.registerTask('default', ['clean', 'ts'])
-  grunt.registerTask('test', ['tslint'])
+  grunt.registerTask('test', ['tslint', 'mochaTest'])
 }
