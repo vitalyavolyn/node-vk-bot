@@ -5,7 +5,7 @@ const LOST_HISTORY_ERROR = 1
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-export default function poll (bot, delay: number = DEFAULT_DELAY) {
+export default function poll(bot, delay: number = DEFAULT_DELAY) {
   return bot.api('groups.getLongPollServer', { group_id: bot.options.group_id })
     .then(res => {
       return request(`${res.server}?act=a_check&key=${res.key}` +
@@ -18,7 +18,7 @@ export default function poll (bot, delay: number = DEFAULT_DELAY) {
       return poll(bot, delay)
     })
 
-  function request (url, delay: number) {
+  function request(url, delay: number) {
     return rq(url, { json: true })
       .then(res => {
         if (!res || !res.ts || (res.failed && res.failed !== LOST_HISTORY_ERROR))

@@ -34,11 +34,11 @@
     "typedef-whitespace": [
       true,
       {
-        "call-signature": "space",
+        "call-signature": "nospace",
         "index-signature": "nospace",
         "parameter": "nospace",
         "property-declaration": "nospace",
-        "variable-declaration": "space"
+        "variable-declaration": "nospace"
       }
     ],
     "variable-name": [
@@ -54,8 +54,8 @@
       "check-type"
     ],
     "array-type": [
-        true,
-        "array"
+      true,
+      "array"
     ],
     "jsdoc-format": true
   }

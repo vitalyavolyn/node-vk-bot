@@ -13,7 +13,7 @@ import { MessageSendParams } from './interfaces/MessageSendParams'
 
 export interface Options {
   token: string,
-  api?: { lang?: string, v?: string},
+  api?: { lang?: string, v?: string },
   group_id: number
 }
 
@@ -22,7 +22,7 @@ export class Bot extends EventEmitter {
   _userEvents: UserEvent[] = []
   _stop: boolean = false
 
-  constructor (public options: Options) {
+  constructor(public options: Options) {
     super()
 
     if (!options.token) throw new Error('token can\'t be empty')
@@ -37,7 +37,7 @@ export class Bot extends EventEmitter {
    *
    * @returns {Promise}
    */
-  api (method: string, params: any = {}) : Promise<VKResponse | VKExecuteResponse> {
+  api(method: string, params: any = {}): Promise<VKResponse | VKExecuteResponse> {
     let o = this.options
     if (o.api) {
       params.v = params.v || o.api.v || '5.80'
@@ -70,7 +70,7 @@ export class Bot extends EventEmitter {
    *
    * @returns {Promise}
    */
-  send (text: string, peer: number, params: MessageSendParams = {}) : Promise<VKResponse> {
+  send(text: string, peer: number, params: MessageSendParams = {}): Promise<VKResponse> {
     params.message = params.message || text
     params.peer_id = params.peer_id || peer
     return this.api('messages.send', params)
@@ -80,7 +80,7 @@ export class Bot extends EventEmitter {
    * Process Callback API response when using webhook
    * @param res Callback API response
    */
-  processUpdate (res: any) {
+  processUpdate(res: any) {
     if (res.type === 'message_new') return this._update(res)
   }
 
@@ -89,13 +89,13 @@ export class Bot extends EventEmitter {
    * @param {number} poll_delay A delay before a restart of the Long Poll client
    * @returns The bot object
    */
-  start (poll_delay?: number) {
+  start(poll_delay?: number) {
     this.on('update', this._update)
     poll(this, poll_delay)
     return this
   }
 
-  stop () {
+  stop() {
     this._stop = true
     this.removeListener('update', this._update)
     this._events = {}
@@ -107,7 +107,7 @@ export class Bot extends EventEmitter {
    * @param pattern
    * @returns The bot object
    */
-  get (pattern: RegExp, listener: (msg?: Message, exec?: RegExpExecArray) => any) {
+  get(pattern: RegExp, listener: (msg?: Message, exec?: RegExpExecArray) => any) {
     this._userEvents.push({
       pattern, listener
     })
@@ -150,12 +150,12 @@ export class Bot extends EventEmitter {
    *
    * @param {object} update
    */
-  private _update (update) {
+  private _update(update) {
     let msg = update.object
 
-    const hasAttachments : boolean = msg.attachments.length
+    const hasAttachments: boolean = msg.attachments.length
 
-    const message : Message = {
+    const message: Message = {
       id: msg.id,
       peer_id: msg.peer_id,
       from_id: msg.from_id,
