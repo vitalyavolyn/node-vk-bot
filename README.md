@@ -125,10 +125,15 @@ bot.send('text', peer_id, params)
 #### uploadPhoto <a name="uploadPhoto"></a>
 Upload a photo.
 
-The only parameter is an absolute path to picture.
+The only parameter is an absolute path to picture or a stream object.
 Returns a Promise that resolves with a [photo object](https://vk.com/dev/photos.saveMessagesPhoto)
 ```javascript
 bot.uploadPhoto('~/kittens.png').then(photo => {
+  console.log(photo)
+})
+
+let stream = fs.createReadStream('./kittens.png')
+bot.uploadPhoto(stream).then(photo => {
   console.log(photo)
 })
 ```

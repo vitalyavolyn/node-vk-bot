@@ -122,10 +122,15 @@ bot.send('text', peer_id, params)
 #### uploadPhoto <a name="uploadPhoto"></a>
 Загружает фото.
 
-Принимает абсолютный путь к изображению
+Принимает абсолютный путь к изображению или `Stream`
 Возвращает Promise с [объектом фотографии](https://vk.com/dev/photos.saveMessagesPhoto)
 ```javascript
 bot.uploadPhoto('~/kittens.png').then(photo => {
+  console.log(photo)
+})
+
+let stream = fs.createReadStream('./kittens.png')
+bot.uploadPhoto(stream).then(photo => {
   console.log(photo)
 })
 ```

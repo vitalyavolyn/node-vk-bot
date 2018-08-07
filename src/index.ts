@@ -1,6 +1,7 @@
 import { EventEmitter } from 'events'
 import * as rq from 'request-promise-native'
 import * as fs from 'fs'
+import * as stream from 'stream'
 
 import poll from './functions/poll'
 
@@ -117,13 +118,20 @@ export class Bot extends EventEmitter {
    * Upload photo
    * @returns {Promise}
    */
-  uploadPhoto (path: string) : Promise<UploadedPhoto> {
+  uploadPhoto(photo: string | stream.Stream): Promise<UploadedPhoto> {
+    let photoStream: stream.Stream
+    if (typeof photo === 'string') {
+      photoStream = fs.createReadStream(photo)
+    } else if (photo instanceof stream.Stream) {
+      photoStream = photo
+    }
+
     return this.api('photos.getMessagesUploadServer')
       .then(server => rq({
         method: 'POST',
         uri: server.upload_url,
         formData: {
-          photo: fs.createReadStream(path)
+          photo: photoStream
         },
         json: true
       }))
