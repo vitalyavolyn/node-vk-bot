@@ -25,7 +25,7 @@ describe('Bot', () => {
         message: 'test',
         access_token: userToken,
         peer_id: -id,
-        v: "5.80"
+        v: '5.80'
       },
       method: 'POST',
       json: true
@@ -60,7 +60,7 @@ describe('Bot', () => {
     })
 
     it('Throws error when using old API version', () => {
-      assert.throws(() => new Bot({ token: botToken, group_id: id, api: { v: "5.79" } }), Error)
+      assert.throws(() => new Bot({ token: botToken, group_id: id, api: { v: '5.79' } }), Error)
     })
   })
 })
