@@ -32,10 +32,6 @@ export class Bot extends EventEmitter {
 
   /**
    * Access VK API
-   * @param method
-   * @param params Optional request params
-   *
-   * @returns {Promise}
    */
   api(method: string, params: any = {}): Promise<VKResponse | VKExecuteResponse> {
     let o = this.options
@@ -65,10 +61,6 @@ export class Bot extends EventEmitter {
 
   /**
    * Send messages
-   * @param text Message text
-   * @param peer peer_id (https://vk.com/dev/messages.send)
-   *
-   * @returns {Promise}
    */
   send(text: string, peer: number, params: MessageSendParams = {}): Promise<VKResponse> {
     params.message = params.message || text
@@ -78,7 +70,6 @@ export class Bot extends EventEmitter {
 
   /**
    * Process Callback API response when using webhook
-   * @param res Callback API response
    */
   processUpdate(res: any) {
     if (res.type === 'message_new') return this._update(res)
@@ -86,8 +77,6 @@ export class Bot extends EventEmitter {
 
   /**
    * Start polling
-   * @param {number} poll_delay A delay before a restart of the Long Poll client
-   * @returns The bot object
    */
   start(poll_delay?: number) {
     this.on('update', this._update)
@@ -104,8 +93,6 @@ export class Bot extends EventEmitter {
 
   /**
    * Listens on specific message matching the RegExp pattern
-   * @param pattern
-   * @returns The bot object
    */
   get(pattern: RegExp, listener: (msg?: Message, exec?: RegExpExecArray) => any) {
     this._userEvents.push({
@@ -116,7 +103,6 @@ export class Bot extends EventEmitter {
 
   /**
    * Upload photo
-   * @returns {Promise}
    */
   uploadPhoto(photo: string | stream.Stream): Promise<UploadedPhoto> {
     let photoStream: stream.Stream
@@ -147,8 +133,6 @@ export class Bot extends EventEmitter {
    * The internal update event listener for LongPoll,
    * used to parse messages and fire
    * get events - YOU SHOULD NOT USE THIS
-   *
-   * @param {object} update
    */
   private _update(update) {
     let msg = update.object

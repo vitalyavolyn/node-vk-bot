@@ -14,7 +14,7 @@ export default function poll(bot, delay: number = DEFAULT_DELAY) {
     .catch(error => {
       bot.emit('poll-error', error)
 
-      // перезапуск при ошибке
+      // restart on error
       return poll(bot, delay)
     })
 
@@ -28,7 +28,7 @@ export default function poll(bot, delay: number = DEFAULT_DELAY) {
         if (res.failed && res.failed === LOST_HISTORY_ERROR)
           bot.emit('poll-error', new Error('event history went out of date or was partially lost'))
 
-        url = url.replace(/ts=.*/, `ts=${res.ts}`) // ставим новое время
+        url = url.replace(/ts=.*/, `ts=${res.ts}`) // set new timestamp
 
         if (!res.failed && res.updates && res.updates.length > 0) {
           for (let update of res.updates) {
