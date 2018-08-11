@@ -6,10 +6,10 @@ import * as stream from 'stream'
 import poll from './functions/poll'
 
 import { VKError, VKExecuteResponse, VKResponse } from './interfaces/APIResponses'
-import { UploadedPhoto } from './interfaces/UploadedPhoto'
-import { Message } from './interfaces/Message'
-import { UserEvent } from './interfaces/UserEvent'
-import { MessageSendParams } from './interfaces/MessageSendParams'
+import UploadedPhoto from './interfaces/UploadedPhoto'
+import Message from './interfaces/Message'
+import UserEvent from './interfaces/UserEvent'
+import MessageSendParams from './interfaces/MessageSendParams'
 
 export interface Options {
   token: string,
@@ -94,7 +94,7 @@ export class Bot extends EventEmitter {
   /**
    * Listens on specific message matching the RegExp pattern
    */
-  get(pattern: RegExp, listener: (msg?: Message, exec?: RegExpExecArray) => any) {
+  get(pattern: UserEvent['pattern'], listener: UserEvent['listener']) {
     this._userEvents.push({
       pattern, listener
     })
@@ -163,7 +163,11 @@ export class Bot extends EventEmitter {
       return
     }
 
-    ev.listener(message, ev.pattern.exec(message.text))
+    ev.listener(
+      message,
+      ev.pattern.exec(message.text),
+      (text: string, params: MessageSendParams = {}) => this.send(text, message.peer_id, params)
+    )
   }
 }
 

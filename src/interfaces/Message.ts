@@ -1,4 +1,4 @@
-export interface Message {
+export default interface Message {
   id: number,
   peer_id: number,
   date: number,

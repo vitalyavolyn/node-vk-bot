@@ -1,4 +1,4 @@
-export interface MessageSendParams {
+export default interface MessageSendParams {
   message?: string,
   peer_id?: number,
   random_id?: number,

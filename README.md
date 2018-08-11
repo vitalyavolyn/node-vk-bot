@@ -104,12 +104,15 @@ Emits an `update` event after getting updates with the response from server.
 #### get <a name="get"></a>
 Listens on specific message matching the RegExp pattern.
 ```javascript
-bot.get(/Hello/i, (msg, exec) => {
+bot.get(/Hello/i, (msg, exec, reply) => {
   console.log(msg)
+  reply('Hi!')
 })
 ```
 
-The argument passed to callback is a [`Message`](#the-message-object) object and result of `pattern.exec(text)`.
+The argument passed to callback is a [`Message`](#the-message-object) object, result of `pattern.exec(text)` and a `reply` function.
+
+`reply` takes text as first argument and optional message.send parameters as second.
 
 -------
 

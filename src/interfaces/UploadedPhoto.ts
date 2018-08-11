@@ -1,4 +1,4 @@
-export interface UploadedPhoto {
+export default interface UploadedPhoto {
   id: number,
   album_id: number,
   owner_id: number,

@@ -101,9 +101,15 @@ new Bot({
 #### get <a name="get"></a>
 Проверяет полученные сообщения RegExp'ом
 ```javascript
-bot.get(/Hello/i, (msg, exec) => {
+bot.get(/Hello/i, (msg, exec, reply) => {
   console.log(msg)
+  reply('Hi!')
 })
+
+Аргументы callback:
+msg - [объект сообщения](#the-message-object)
+exec - результат `pattern.exec(text)`
+reply - Функция для ответа на сообщение, принимает текст сообщения и необязательные параметры message.send
 ```
 
 Аргументы, с которыми вызывается callback - объект [`Message`](#the-message-object) и результат `pattern.exec(text)` (где `text` - текст сообщения).
