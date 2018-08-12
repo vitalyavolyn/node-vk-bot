@@ -23,10 +23,10 @@ const bot = new Bot({
   group_id: 123456
 }).start()
 
-bot.get(/Hi|Hello|Hey/i, message => {
+bot.get(/Hi|Hello|Hey/i, (message, exec, reply) => {
   const options =  { forward_messages: message.id }
 
-  bot.send('Hello!', message.peer_id, options)
+  reply('Hello!', options)
 })
 ```
 

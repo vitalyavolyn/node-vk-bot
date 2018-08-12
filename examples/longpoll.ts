@@ -6,10 +6,10 @@ const bot = new Bot({
   group_id: 123456
 })
   .start()
-  .get(/cat|kitten/, async (msg: Message) => {
+  .get(/cat|kitten/, async (msg, exec, reply) => {
     const photoPath = path.join(__dirname, '../test/kitten.jpg')
     const photo = await bot.uploadPhoto(photoPath)
-    bot.send('Take this', msg.peer_id, {
+    reply('Take this', {
       attachment: `photo${photo.owner_id}_${photo.id}`
     })
   })
