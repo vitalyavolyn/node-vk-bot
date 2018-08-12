@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { Bot } = require('node-vk-bot');
+const { Bot } = require('..');
 const bot = new Bot({
     token: 'Community API token',
     group_id: 123456
