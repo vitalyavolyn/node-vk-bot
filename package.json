@@ -22,7 +22,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/mocha": "5.2.5",
-    "@types/node": "7.0.69",
+    "@types/node": "7.0.70",
     "@types/request": "2.47.1",
     "@types/request-promise-native": "1.0.15",
     "grunt": "1.0.3",
