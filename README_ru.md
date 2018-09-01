@@ -43,6 +43,7 @@ bot.get(/Hi|Hello|Hey/i, (message, exec, reply) => {
   - [Methods](#methods)
     - [`start`](#start)
     - [`get`](#get)
+    - [`getPayload`](#getPayload)
     - [`send`](#send)
     - [`uploadPhoto`](#uploadPhoto)
     - [`api`](#api)
@@ -52,6 +53,7 @@ bot.get(/Hi|Hello|Hey/i, (message, exec, reply) => {
     - [update](#update)
     - [voice](#voice)
     - [sticker](#sticker)
+    - [payload](#payload)
     - [poll-error](#poll-error)
     - [command-notfound](#command-notfound)
 - [The `Message` Object](#the-message-object)
@@ -113,6 +115,19 @@ reply - Функция для ответа на сообщение, приним
 ```
 
 Аргументы, с которыми вызывается callback - объект [`Message`](#the-message-object) и результат `pattern.exec(text)` (где `text` - текст сообщения).
+
+-------
+
+#### getPayload <a name="getPayload"></a>
+То же самое, что и get, но для payload клавиатур
+
+Это синтаксический сахар для [события `payload`](#payload)
+
+```
+bot.getPayload('{"command": "start"}', (msg, reply) => console.log(msg))
+```
+
+Аргументы: строка json и callback
 
 -------
 
@@ -193,6 +208,11 @@ bot.on('update', update => {
 
 -------
 
+#### payload <a name="payload"></a>
+Вызывается при получении сообщения с json payload (используется в клавиатурах)
+Возвращает объект `Message` и функцию [reply](#get)
+
+-------
 
 #### poll-error <a name="poll-error"></a>
 Вызывается при ошибке при использовании LongPoll

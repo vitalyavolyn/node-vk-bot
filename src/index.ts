@@ -17,6 +17,8 @@ export interface Options {
   group_id: number
 }
 
+export type replyFunc = (text?: string, params?: MessageSendParams) => Promise<VKResponse>
+
 export class Bot extends EventEmitter {
   _events: Object = {}
   _userEvents: UserEvent[] = []
@@ -101,6 +103,14 @@ export class Bot extends EventEmitter {
     return this
   }
 
+  getPayload(jsonString: string, listener: (msg?: Message, reply?: replyFunc) => void) {
+    this.on('payload', (msg, reply) => {
+      if (JSON.stringify(JSON.parse(msg.payload)) === JSON.stringify(JSON.parse(jsonString))) {
+        listener(msg, reply)
+      }
+    })
+  }
+
   /**
    * Upload photo
    */
@@ -151,6 +161,13 @@ export class Bot extends EventEmitter {
       fwd_messages: msg.fwd_messages
     }
 
+    const reply = (text: string, params: MessageSendParams = {}) => this.send(text, message.peer_id, params)
+
+    if (msg.payload) {
+      message.payload = msg.payload
+      this.emit('payload', msg, reply)
+    }
+
     if (hasAttachments && msg.attachments[0].type === 'sticker') return this.emit('sticker', message)
     if (hasAttachments && msg.attachments[0].type === 'doc' && msg.attachments[0].doc.preview.audio_msg) return this.emit('voice', message)
 
@@ -166,7 +183,7 @@ export class Bot extends EventEmitter {
     ev.listener(
       message,
       ev.pattern.exec(message.text),
-      (text: string, params: MessageSendParams = {}) => this.send(text, message.peer_id, params)
+      reply
     )
   }
 }

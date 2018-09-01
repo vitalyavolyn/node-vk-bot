@@ -45,6 +45,7 @@ if you want your bot to be in this list, just make a pull request
   - [Methods](#methods)
     - [`start`](#start)
     - [`get`](#get)
+    - [`getPayload`](#getPayload)
     - [`send`](#send)
     - [`uploadPhoto`](#uploadPhoto)
     - [`api`](#api)
@@ -54,6 +55,7 @@ if you want your bot to be in this list, just make a pull request
     - [update](#update)
     - [voice](#voice)
     - [sticker](#sticker)
+    - [payload](#payload)
     - [poll-error](#poll-error)
     - [command-notfound](#command-notfound)
 - [The `Message` Object](#the-message-object)
@@ -113,6 +115,18 @@ bot.get(/Hello/i, (msg, exec, reply) => {
 The argument passed to callback is a [`Message`](#the-message-object) object, result of `pattern.exec(text)` and a `reply` function.
 
 `reply` takes text as first argument and optional message.send parameters as second.
+
+-------
+
+#### getPayload <a name="getPayload"></a>
+Listens for specific `payload` (used for keyboards)
+This is a syntactic sugar for the [`payload` event](#payload)
+
+```
+bot.getPayload('{"command": "start"}', (msg, reply) => console.log(msg))
+```
+
+Arguments: json string and listener
 
 -------
 
@@ -190,6 +204,12 @@ The voice event is emitted whenever there is a new voice message. (emits `Messag
 
 #### sticker <a name="sticker"></a>
 The sticker event is emitted whenever there is a new incoming sticker. (emits `Message` object)
+
+-------
+
+#### payload <a name="payload"></a>
+Emitted when bot recieves a message with json payload (used in keyboards)
+Emits `Message` object and [reply function](#get)
 
 -------
 

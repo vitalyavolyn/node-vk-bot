@@ -7,5 +7,6 @@ export default interface Message {
   attachments: any,
   important: boolean,
   conversation_message_id: number,
-  fwd_messages: any
+  fwd_messages: any,
+  payload?: string
 }
