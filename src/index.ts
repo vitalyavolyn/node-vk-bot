@@ -144,10 +144,11 @@ export class Bot extends EventEmitter {
    * used to parse messages and fire
    * get events - YOU SHOULD NOT USE THIS
    */
-  private _update(update) {
-    let msg = update.object
+  private _update(update = {}) {
+    let msg = update.object || false
+    if (!msg) return false
 
-    const hasAttachments: boolean = msg.attachments.length
+    const hasAttachments: boolean = msg.attachments && msg.attachments.length || false
 
     const message: Message = {
       id: msg.id,
