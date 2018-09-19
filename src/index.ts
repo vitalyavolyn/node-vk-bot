@@ -144,7 +144,9 @@ export class Bot extends EventEmitter {
    * used to parse messages and fire
    * get events - YOU SHOULD NOT USE THIS
    */
-  private _update(update = {}) {
+  private _update(update: {
+    object?
+  }) {
     let msg = update.object || false
     if (!msg) return false
 
