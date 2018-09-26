@@ -26,7 +26,7 @@
     "@types/request": "2.47.1",
     "@types/request-promise-native": "1.0.15",
     "grunt": "1.0.3",
-    "grunt-contrib-clean": "1.1.0",
+    "grunt-contrib-clean": "2.0.0",
     "grunt-mocha-test": "0.13.3",
     "grunt-ts": "6.0.0-beta.21",
     "grunt-tslint": "5.0.2",
