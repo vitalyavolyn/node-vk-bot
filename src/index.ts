@@ -10,11 +10,13 @@ import UploadedPhoto from './interfaces/UploadedPhoto'
 import Message from './interfaces/Message'
 import UserEvent from './interfaces/UserEvent'
 import MessageSendParams from './interfaces/MessageSendParams'
+import {build} from './decorators/builder'
 
 export interface Options {
   token: string,
   api?: { lang?: string, v?: string },
-  group_id: number
+  group_id: number,
+  controllers?: string[]
 }
 
 export type replyFunc = (text?: string, params?: MessageSendParams) => Promise<VKResponse>
@@ -30,6 +32,7 @@ export class Bot extends EventEmitter {
     if (!options.token) throw new Error('token can\'t be empty')
     if (!options.group_id) throw new Error('group_id can\'t be empty')
     if (options.api && Number(options.api.v) < 5.80) throw new Error('API version must be > 5.80')
+    if (options.controllers && options.controllers.length) build(this, options.controllers)
   }
 
   /**
@@ -200,3 +203,5 @@ export {
   UserEvent,
   MessageSendParams
 }
+
+export * from './decorators'
