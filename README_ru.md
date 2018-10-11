@@ -56,6 +56,11 @@ bot.get(/Hi|Hello|Hey/i, (message, exec, reply) => {
     - [payload](#payload)
     - [poll-error](#poll-error)
     - [command-notfound](#command-notfound)
+- [Keyboard](#keyboard)
+  - [addButton](#addButton)
+  - [addRow](#addRow)
+  - [toString](#toString)
+  - [KeyboardColor](#KeyboardColor)
 - [The `Message` Object](#the-message-object)
 
 ## Начало работы <a name="getting-started"></a>
@@ -233,6 +238,66 @@ bot.on('command-notfound', msg => {
   bot.send('What?', msg.peer_id)
 })
 ```
+
+-------
+
+## Keyboard <a name="keyboard"></a>
+Класс для создания клавиатуры для бота
+```javascript
+bot.get(/Hi|Hello|Hey/i, message => {
+  const keyboard = new Keyboard(true)
+    .addButton('Red', KeyboardColor.NEGATIVE)
+    .addButton('Green', KeyboardColor.POSITIVE)
+    .addRow()
+    .addButton('Blue', KeyboardColor.PRIMARY)
+    .addButton('White')
+
+  bot.send('Hello!', message.peer_id, keyboard)
+});
+```
+[Пример целиком](https://github.com/vitalyavolyn/node-vk-bot/blob/master/examples/keyboards.js)
+
+Единственный параметр - one_time 
+Если True, клавиатура исчезнет после нажатия на кнопку
+```javascript
+new Keyboard(true)
+```
+-------
+
+### addButton <a name="addButton"></a>
+Добавить кнопку в последнюю строчку кнопок.
+
+Parameters:
+- label (string) - Текст на кнопке (required)
+- color (string или [KeyboardColor](#KeyboardColor))
+- payload (any) - Параметр для callback api
+
+Максимальное количество кнопок на строке - 4
+
+-------
+
+### addRow <a name="addRow"></a>
+Добавляет новую строчку для кнопок
+
+Максимальное количество строк - 10
+
+-------
+
+### toString <a name="toString"></a>
+Получить клавиатуру в виде JSON строки
+
+-------
+
+### KeyboardColor <a name="KeyboardColor"></a>
+```javascript
+addButton('label', KeyboardColor.NEGATIVE)
+```
+
+Возможные цвета кнопок:
+- PRIMARY - синяя
+- DEFAULT - белая
+- NEGATIVE - красная
+- POSITIVE - зеленая
 
 -------
 

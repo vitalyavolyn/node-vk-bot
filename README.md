@@ -58,6 +58,11 @@ if you want your bot to be in this list, just make a pull request
     - [payload](#payload)
     - [poll-error](#poll-error)
     - [command-notfound](#command-notfound)
+- [Keyboard](#keyboard)
+  - [addButton](#addButton)
+  - [addRow](#addRow)
+  - [toString](#toString)
+  - [KeyboardColor](#KeyboardColor)
 - [The `Message` Object](#the-message-object)
 
 ## Getting Started <a name="getting-started"></a>
@@ -233,6 +238,66 @@ bot.on('command-notfound', msg => {
   bot.send('What?', msg.peer_id)
 })
 ```
+
+-------
+
+## Keyboard <a name="keyboard"></a>
+The class used to create keyboards in messages
+```javascript
+bot.get(/Hi|Hello|Hey/i, message => {
+  const keyboard = new Keyboard(true)
+    .addButton('Red', KeyboardColor.NEGATIVE)
+    .addButton('Green', KeyboardColor.POSITIVE)
+    .addRow()
+    .addButton('Blue', KeyboardColor.PRIMARY)
+    .addButton('White')
+
+  bot.send('Hello!', message.peer_id, keyboard)
+});
+```
+[Full example](https://github.com/vitalyavolyn/node-vk-bot/blob/master/examples/keyboards.js)
+
+The only argument - one_time 
+If `true`, the keyboard hides after user replies
+```javascript
+new Keyboard(true)
+```
+-------
+
+### addButton <a name="addButton"></a>
+Add a button to the last row.
+
+Parameters:
+- label (string) - Text on button (required)
+- color (string or [KeyboardColor](#KeyboardColor))
+- payload (any) - A parameter for Callback API
+
+Maximum amount of buttons in one row is 4
+
+-------
+
+### addRow <a name="addRow"></a>
+Add a new row to the keyboard.
+
+Maximum amount of rows is 10
+
+-------
+
+### toString <a name="toString"></a>
+Get the keyboard as a JSON string
+
+-------
+
+### KeyboardColor <a name="KeyboardColor"></a>
+```javascript
+addButton('label', KeyboardColor.NEGATIVE)
+```
+
+Available colors:
+- PRIMARY - blue
+- DEFAULT - white
+- NEGATIVE - red
+- POSITIVE - green
 
 -------
 
