@@ -12,11 +12,7 @@ npm install --save node-vk-bot
 
 # Пример <a name="example"></a>
 ```javascript
-// TypeScript
-import { Bot } from 'node-vk-bot'
-
-// ES5
-const { Bot } = require('node-vk-bot')
+const { Bot, Keyboard } = require('node-vk-bot')
 
 const bot = new Bot({
   token: 'YOUR TOKEN',
@@ -24,7 +20,8 @@ const bot = new Bot({
 }).start()
 
 bot.get(/Hi|Hello|Hey/i, (message, exec, reply) => {
-  const options =  { forward_messages: message.id }
+  const keyboard = new Keyboard().addButton('Hi!')
+  const options =  { forward_messages: message.id, keyboard }
 
   reply('Hello!', options)
 })
@@ -81,7 +78,7 @@ new Bot({
   token: 'TOKEN',
   group_id: 123456,
   api: {
-    v: 5.62, // >= 5.80
+    v: 5.80, // >= 5.80
     lang: 'ru'
   }
 })

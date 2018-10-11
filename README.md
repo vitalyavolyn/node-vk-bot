@@ -14,11 +14,7 @@ If you are cloning this repository, remember to run `npm install` to install dep
 
 # Example <a name="example"></a>
 ```javascript
-// TypeScript
-import { Bot } from 'node-vk-bot'
-
-// ES5
-const { Bot } = require('node-vk-bot')
+const { Bot, Keyboard } = require('node-vk-bot')
 
 const bot = new Bot({
   token: 'YOUR TOKEN',
@@ -26,7 +22,8 @@ const bot = new Bot({
 }).start()
 
 bot.get(/Hi|Hello|Hey/i, (message, exec, reply) => {
-  const options =  { forward_messages: message.id }
+  const keyboard = new Keyboard().addButton('Hi!')
+  const options =  { forward_messages: message.id, keyboard }
 
   reply('Hello!', options)
 })
