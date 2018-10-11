@@ -1,3 +1,5 @@
+import Keyboard from '../Keyboard'
+
 export default interface MessageSendParams {
   message?: string,
   peer_id?: number,
@@ -10,6 +12,6 @@ export default interface MessageSendParams {
   attachment?: string,
   forward_messages?: string | number,
   sticker_id?: number,
-  keyboard?: string,
+  keyboard?: string | Keyboard,
   payload?: any
 }
