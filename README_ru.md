@@ -92,6 +92,7 @@ new Bot({
 | token     | String | Да |
 | group_id  | Number | Да |
 | api       | Object| Нет |
+| controllers | String[] | Нет |
 
 `api` - объект с настройками API: **v**ersion и **lang**uage. (и то, и то - строки) ([узнать больше](https://vk.com/dev/api_requests))
 

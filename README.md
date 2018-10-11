@@ -95,6 +95,7 @@ new Bot({
 | token     | String | Yes |
 | group_id  | Number | Yes
 | api       | Object| No |
+| controllers | String[] | No |
 
 `api` is object with API settings: **v**ersion and **lang**uage. (both strings) ([Read more](https://vk.com/dev/api_requests))
 
