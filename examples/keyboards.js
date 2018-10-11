@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { Bot } = require('..');
+
+const { Bot, Keyboard, KeyboardColor } = require('..');
 const bot = new Bot({
   token: 'Community API token',
   group_id: 123456
@@ -22,27 +23,11 @@ app.listen(port, () => {
 });
 
 bot.get(/Hi|Hello|Hey/i, message => {
-  bot.send('Hello!', message.peer_id, {
-    keyboard: JSON.stringify({
-      one_time: true,
-      buttons: [
-        {
-          action: {
-            type: 'text',
-            label: 'Red'
-          },
-          color: 'negative'
-        },
-        {
-          action: {
-            type: 'text',
-            label: 'Green'
-          },
-          color: 'positive'
-        },
-      ]
-    })
-  });
+  const keyboard = new Keyboard(true)
+    .addButton('Red', KeyboardColor.NEGATIVE)
+    .addButton('Green', KeyboardColor.POSITIVE)
+
+  bot.send('Hello!', message.peer_id, keyboard)
 });
 
 bot.get(/Red|Green/, msg => bot.send('You clicked a button - ' + msg.body, msg.peer_id))
