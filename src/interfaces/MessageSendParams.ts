@@ -8,7 +8,7 @@ export default interface MessageSendParams {
   lat?: number,
   long?: number,
   attachment?: string,
-  forward_messages?: string,
+  forward_messages?: string | number,
   sticker_id?: number,
   keyboard?: string,
   payload?: any
