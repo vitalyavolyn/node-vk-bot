@@ -149,13 +149,13 @@ export class Bot extends EventEmitter {
   }
 
   /**
-   * The internal update event listener for LongPoll,
+   * The internal update event listener,
    * used to parse messages and fire
    * get events - YOU SHOULD NOT USE THIS
    */
-  private _update(update: {
-    object?
-  }) {
+  private _update(update: { object?, group_id: number }) {
+    if (update.group_id !== this.options.group_id) return
+
     let msg = update.object || false
     if (!msg) return false
 
