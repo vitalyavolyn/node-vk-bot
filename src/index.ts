@@ -10,7 +10,8 @@ import UploadedPhoto from './interfaces/UploadedPhoto'
 import Message from './interfaces/Message'
 import UserEvent from './interfaces/UserEvent'
 import MessageSendParams from './interfaces/MessageSendParams'
-import {build} from './decorators/builder'
+import { build } from './decorators/builder'
+import Keyboard, { KeyboardColor } from './Keyboard'
 
 export interface Options {
   token: string,
@@ -70,6 +71,11 @@ export class Bot extends EventEmitter {
   send(text: string, peer: number, params: MessageSendParams = {}): Promise<VKResponse> {
     params.message = params.message || text
     params.peer_id = params.peer_id || peer
+
+    if (params.keyboard && params.keyboard instanceof Keyboard) {
+      params.keyboard = params.keyboard.toString()
+    }
+
     return this.api('messages.send', params)
   }
 
@@ -201,7 +207,9 @@ export {
   VKExecuteResponse,
   VKResponse,
   UserEvent,
-  MessageSendParams
+  MessageSendParams,
+  Keyboard,
+  KeyboardColor
 }
 
 export * from './decorators'

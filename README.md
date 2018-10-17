@@ -14,11 +14,7 @@ If you are cloning this repository, remember to run `npm install` to install dep
 
 # Example <a name="example"></a>
 ```javascript
-// TypeScript
-import { Bot } from 'node-vk-bot'
-
-// ES5
-const { Bot } = require('node-vk-bot')
+const { Bot, Keyboard } = require('node-vk-bot')
 
 const bot = new Bot({
   token: 'YOUR TOKEN',
@@ -26,7 +22,8 @@ const bot = new Bot({
 }).start()
 
 bot.get(/Hi|Hello|Hey/i, (message, exec, reply) => {
-  const options =  { forward_messages: message.id }
+  const keyboard = new Keyboard().addButton('Hi!')
+  const options =  { forward_messages: message.id, keyboard }
 
   reply('Hello!', options)
 })
@@ -58,6 +55,11 @@ if you want your bot to be in this list, just make a pull request
     - [payload](#payload)
     - [poll-error](#poll-error)
     - [command-notfound](#command-notfound)
+- [Keyboard](#keyboard)
+  - [addButton](#addButton)
+  - [addRow](#addRow)
+  - [toString](#toString)
+  - [KeyboardColor](#KeyboardColor)
 - [The `Message` Object](#the-message-object)
 
 ## Getting Started <a name="getting-started"></a>
@@ -90,6 +92,7 @@ new Bot({
 | token     | String | Yes |
 | group_id  | Number | Yes
 | api       | Object| No |
+| controllers | String[] | No |
 
 `api` is object with API settings: **v**ersion and **lang**uage. (both strings) ([Read more](https://vk.com/dev/api_requests))
 
@@ -233,6 +236,66 @@ bot.on('command-notfound', msg => {
   bot.send('What?', msg.peer_id)
 })
 ```
+
+-------
+
+## Keyboard <a name="keyboard"></a>
+The class used to create keyboards in messages
+```javascript
+bot.get(/Hi|Hello|Hey/i, message => {
+  const keyboard = new Keyboard(true)
+    .addButton('Red', KeyboardColor.NEGATIVE)
+    .addButton('Green', KeyboardColor.POSITIVE)
+    .addRow()
+    .addButton('Blue', KeyboardColor.PRIMARY)
+    .addButton('White')
+
+  bot.send('Hello!', message.peer_id, keyboard)
+});
+```
+[Full example](https://github.com/vitalyavolyn/node-vk-bot/blob/master/examples/keyboards.js)
+
+The only argument - one_time 
+If `true`, the keyboard hides after user replies
+```javascript
+new Keyboard(true)
+```
+-------
+
+### addButton <a name="addButton"></a>
+Add a button to the last row.
+
+Parameters:
+- label (string) - Text on button (required)
+- color (string or [KeyboardColor](#KeyboardColor))
+- payload (any) - A parameter for Callback API
+
+Maximum amount of buttons in one row is 4
+
+-------
+
+### addRow <a name="addRow"></a>
+Add a new row to the keyboard.
+
+Maximum amount of rows is 10
+
+-------
+
+### toString <a name="toString"></a>
+Get the keyboard as a JSON string
+
+-------
+
+### KeyboardColor <a name="KeyboardColor"></a>
+```javascript
+addButton('label', KeyboardColor.NEGATIVE)
+```
+
+Available colors:
+- PRIMARY - blue
+- DEFAULT - white
+- NEGATIVE - red
+- POSITIVE - green
 
 -------
 
