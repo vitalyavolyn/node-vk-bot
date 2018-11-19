@@ -181,7 +181,13 @@ export class Bot extends EventEmitter {
     }
 
     if (hasAttachments && msg.attachments[0].type === 'sticker') return this.emit('sticker', message)
-    if (hasAttachments && msg.attachments[0].type === 'doc' && msg.attachments[0].doc.preview.audio_msg) return this.emit('voice', message)
+
+    const isAudioMsg = hasAttachments &&
+      msg.attachments[0].type === 'doc' &&
+      msg.attachments[0].doc.preview &&
+      msg.attachments[0].doc.preview.audio_msg
+
+    if (isAudioMsg) return this.emit('voice', message)
 
     if (!message.text && !hasAttachments) return
 
