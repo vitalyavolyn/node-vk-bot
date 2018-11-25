@@ -11,9 +11,11 @@ export enum KeyboardColor {
 export default class Keyboard {
   private obj: any
 
-  constructor(oneTime = false) { this.obj = { one_time: oneTime, buttons: [[]] } }
+  constructor(oneTime = false) { this.obj = { one_time: oneTime, buttons: [] } }
 
   addButton(label: string, color: string = KeyboardColor.DEFAULT, payload = null) {
+    if (!this.obj.buttons.length) this.obj.buttons.push([])
+
     let lastRow = this.obj.buttons[this.obj.buttons.length - 1]
     if (lastRow.length === 4) throw new Error('Maximum amount of buttons in one row = 4')
 
