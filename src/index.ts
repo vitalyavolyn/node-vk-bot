@@ -114,7 +114,7 @@ export class Bot extends EventEmitter {
 
   getPayload(jsonString: string, listener: (msg?: Message, reply?: replyFunc) => void) {
     this.on('payload', (msg, reply) => {
-      if (JSON.stringify(JSON.parse(msg.payload)) === JSON.stringify(JSON.parse(jsonString))) {
+      if (JSON.stringify(JSON.parse(msg.payload)) === (jsonString)) {
         listener(msg, reply)
       }
     })
